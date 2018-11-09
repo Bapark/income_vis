@@ -1,0 +1,11 @@
+.inline {
+    display: inline-block;
+}
+
+.view {
+    width: 750px;
+    /*margin: auto;*/
+    padding: 5px;
+    display: inline-block;
+    float: left;
+}
