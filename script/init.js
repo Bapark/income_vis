@@ -29,6 +29,7 @@ async function loadRaceData(){
 	}
 
 	console.log(raceData);
+	new IncomeTimePlot(raceData);
 
 }
 
