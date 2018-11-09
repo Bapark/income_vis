@@ -1,9 +1,4 @@
-Year,"Number
-(thousands)",Upper limit of each fifth (dollars),,,,"Lower limit
-of top 5
-percent
-(dollars)"
-,,Lowest,Second,Third,Fourth,
+Year,Number(thousands),LowestUL,SecondUL,ThirdUL,FourthUL,Top 5 LL
 2017,"127,586","24,638","47,110","77,552","126,855","237,034"
 2016,"126,224","24,518","46,581","76,479","123,621","230,095"
 2015,"125,819","23,591","45,020","74,498","121,060","221,900"
