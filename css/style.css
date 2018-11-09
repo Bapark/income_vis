@@ -9,3 +9,7 @@
     display: inline-block;
     float: left;
 }
+
+.sub-button {
+    margin-left: 15px;
+}

@@ -34,11 +34,53 @@
 
 <div id ="incomeLineChart" class = "wrapper">
     <div><h2>Income By the Years</h2></div>
-    <div id="radioSelectors" class = "inline"></div>
+    <div id="radioSelectors" class = "inline">
+        <div id='overall-button-group' class='button-group'>
+            <input type='checkbox' class='top-level-button'> Overall</br>
+            <input type='checkbox' class='sub-button' id='overall-top5'> Top 5%</br>
+            <input type='checkbox' class='sub-button' id='overall-fourth'> Fourth</br>
+            <input type='checkbox' class='sub-button' id='overall-third'> Third</br>
+            <input type='checkbox' class='sub-button' id='overall-second'> Second</br>
+            <input type='checkbox' class='sub-button' id='overall-lowest'> Lowest</br>
+        </div>
+        <div id='asian-button-group' class='button-group'>
+            <input type='checkbox' class='top-level-button'> Asian</br>
+            <input type='checkbox' class='sub-button' id='asian-top5'> Top 5%</br>
+            <input type='checkbox' class='sub-button' id='asian-fourth'> Fourth</br>
+            <input type='checkbox' class='sub-button' id='asian-third'> Third</br>
+            <input type='checkbox' class='sub-button' id='asian-second'> Second</br>
+            <input type='checkbox' class='sub-button' id='asian-lowest'> Lowest</br>
+        </div>
+        <div id='black-button-group' class='button-group'>
+            <input type='checkbox' class='top-level-button'> Black</br>
+            <input type='checkbox' class='sub-button' id='black-top5'> Top 5%</br>
+            <input type='checkbox' class='sub-button' id='black-fourth'> Fourth</br>
+            <input type='checkbox' class='sub-button' id='black-third'> Third</br>
+            <input type='checkbox' class='sub-button' id='black-second'> Second</br>
+            <input type='checkbox' class='sub-button' id='black-lowest'> Lowest</br>
+        </div>
+        <div id='hispanic-button-group' class='button-group'>
+            <input type='checkbox' class='top-level-button'> Hispanic</br>
+            <input type='checkbox' class='sub-button' id='hispanic-top5'> Top 5%</br>
+            <input type='checkbox' class='sub-button' id='hispanic-fourth'> Fourth</br>
+            <input type='checkbox' class='sub-button' id='hispanic-third'> Third</br>
+            <input type='checkbox' class='sub-button' id='hispanic-second'> Second</br>
+            <input type='checkbox' class='sub-button' id='hispanic-lowest'> Lowest</br>
+        </div>
+        <div id='white-button-group' class='button-group'>
+            <input type='checkbox' class='top-level-button'> White</br>
+            <input type='checkbox' class='sub-button' id='white-top5'> Top 5%</br>
+            <input type='checkbox' class='sub-button' id='white-fourth'> Fourth</br>
+            <input type='checkbox' class='sub-button' id='white-third'> Third</br>
+            <input type='checkbox' class='sub-button' id='white-second'> Second</br>
+            <input type='checkbox' class='sub-button' id='white-lowest'> Lowest</br>
+        </div>
+    </div>
     <div id="incomeLineSvg" class = "view"></div>
 </div>
 
 <!--Add scripts for interactivity-->
+<script type="application/javascript" src="script/incomechart.js"></script>
 <script type="application/javascript" src="script/init.js"></script>
 
 
