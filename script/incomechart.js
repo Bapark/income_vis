@@ -65,4 +65,8 @@ class IncomeTimePlot {
                                'rotate(-90)');
 
     }
+
+    updatePlot() {
+        
+    }
 }
