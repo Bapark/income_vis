@@ -5,6 +5,10 @@ d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
    
 });
 
+d3.csv("data/highest_marginal_income_taxrates.csv").then(incomedata => {
+    console.log(incomedata);
+   
+});
 
 //setup racial data sets 
 
