@@ -3,13 +3,19 @@
 }
 
 .view {
-    width: 750px;
+    width: 810px;
     /*margin: auto;*/
     padding: 5px;
     display: inline-block;
-    float: left;
+
 }
 
 .sub-button {
     margin-left: 15px;
+}
+#radioSelectors{
+	margin-left: 60px;
+}
+#incomeLineDiv{
+	margin-left: 60px;
 }

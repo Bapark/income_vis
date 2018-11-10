@@ -18,19 +18,8 @@ class IncomeTimePlot {
     }
 
     drawPlot() {
-        /*
-         You will be setting up the plot for the scatterplot.
-         Here you will create axes for the x and y data that you will be selecting and calling in updatePlot
-         (hint): class them.
-
-         Main things you should set up here:
-         1). Create the x and y axes
-         2). Create the activeYear background text
-
-
-         The dropdown menus have been created for you!
-
-         */         
+       
+          
         this.svg = d3.select('#incomeLineDiv')
             .append('svg')
             .attr('width', this.width + this.margin.left + this.margin.right)
