@@ -1,0 +1,7 @@
+Bring tax rate changes in to visualization if possible
+Possibly show political landscape over time (Party in power)
+Measure of success will this convince my dad
+How can they see the trend over time? Eyes vs memory we are only using a time slider
+    Various ways to show trend over time that are better than just scrubbing
+Possibly capture expectations over the map.
+Allow users to turn visualization into research project, but entering their own historical data
