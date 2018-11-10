@@ -73,7 +73,9 @@ class IncomeTimePlot {
     }
 
     updatePlot() {
-        
+        let checked = document.querySelectorAll('input[class=sub-button]:checked');
+        console.log(checked);
+        let checks = document.getElementsByClassName('sub-button');
     }
 
     drawPath(path, color) {

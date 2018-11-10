@@ -29,7 +29,15 @@ async function loadRaceData(){
 	}
 
 	console.log(raceData);
-	new IncomeTimePlot(raceData);
+	//globalscope
+	incomeTimePlot = new IncomeTimePlot(raceData);
+	let subboxes = document.getElementsByClassName('sub-button');
+	console.log(subboxes);
+	
+	subboxes.foreach((elem) => {
+		elem.onclick = incomeTimePlot.update;
+	});
+
 
 }
 
