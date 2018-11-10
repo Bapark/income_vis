@@ -35,7 +35,7 @@ async function loadRaceData(){
 	
 	//globalscope
 	incomeTimePlot = new IncomeTimePlot(raceData);
-	d3.selectAll('.sub-button').on('change', incomeTimePlot.updatePlot);
+	d3.selectAll('.sub-button').on('change', () => incomeTimePlot.updatePlot());
 	d3.selectAll('.top-level-button').on('change', () => {
 		let src = d3.event.originalTarget;
 		d3.selectAll(`.${src.classList[1]}`)
