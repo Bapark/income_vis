@@ -42,20 +42,41 @@ class IncomeTimePlot {
             .attr('transform', 'translate(' + this.margin.left + ', ' + this.margin.top + ')')
             .classed('axis', true);
         svgGroup.append('text')
-            .text('x-axis-label'.toUpperCase())
+            .text('year'.toUpperCase())
             .attr('id', 'x-axis-label')
             .classed('axis-label', true)
             .attr('transform', 'translate(' + (this.width/2 + this.margin.left) + ', ' + (this.height + this.margin.bottom) + ')');
         svgGroup.append('text')
-            .text('y-axis-label'.toUpperCase())
+            .text('USD (2017)'.toUpperCase())
             .attr('id', 'y-axis-label')
             .classed('axis-label', true)
             .attr('transform', 'translate(10, ' + (this.height/2 + this.margin.bottom) + ') ' +
                                'rotate(-90)');
+        
+        this.xScale = d3.scaleTime()
+            .domain([new Date(1960, 0, 1, 0), new Date(2018, 0, 1, 0)])
+            .range([0, this.width])
+            .nice();
+        this.yScale = d3.scaleLinear()
+            .domain([0, 300000])
+            .range([this.height, 0])
+            .nice();
+
+        let xAxis = d3.axisBottom();
+        let yAxis = d3.axisLeft();
+        xAxis.scale(this.xScale);
+        yAxis.scale(this.yScale)
+            .ticks(10);
+        d3.select('#x-axis').call(xAxis);
+        d3.select('#y-axis').call(yAxis);   
 
     }
 
     updatePlot() {
         
+    }
+
+    drawPath(path, color) {
+
     }
 }
