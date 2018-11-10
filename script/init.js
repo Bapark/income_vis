@@ -28,15 +28,15 @@ async function loadRaceData(){
 		White : whitedata
 	}
 
-	console.log(raceData);
+	
 	//globalscope
 	incomeTimePlot = new IncomeTimePlot(raceData);
 	let subboxes = document.getElementsByClassName('sub-button');
-	console.log(subboxes);
 	
-	subboxes.foreach((elem) => {
-		elem.onclick = incomeTimePlot.update;
-	});
+	
+	d3.selectAll('.sub-button').on('change', incomeTimePlot.updatePlot);
+	d3.selectAll('.top-level-button').on('change', incomeTimePlot.updatePlot);
+	
 
 
 }

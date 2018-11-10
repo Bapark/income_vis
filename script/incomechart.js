@@ -13,6 +13,7 @@ class IncomeTimePlot {
         this.width = 810 - this.margin.left - this.margin.right;
         this.height = 500 - this.margin.top - this.margin.bottom;
         this.data = data;
+
         this.drawPlot();
 
     }
@@ -70,12 +71,135 @@ class IncomeTimePlot {
         d3.select('#x-axis').call(xAxis);
         d3.select('#y-axis').call(yAxis);   
 
+
+
+        this.updatePlot();
+
     }
 
     updatePlot() {
+        let that = this;
         let checked = document.querySelectorAll('input[class=sub-button]:checked');
-        console.log(checked);
         let checks = document.getElementsByClassName('sub-button');
+
+        let majorBoxes = d3.selectAll('.top-level-button');
+
+        let nextData = {}; //TODO build data to draw lines based on what is checked
+
+        majorBoxes.each(function(){
+            
+            let thisbox = d3.select(this);
+
+            if(thisbox.property('checked')){
+               let parent = d3.select(this.parentNode);
+               let buttons = parent.selectAll('.sub-button');
+
+               buttons.each(function(){
+                //if this equals 
+               
+                    let box = d3.select(this);
+                    if(box.property('checked')){
+                        if(box.classed('overall')){
+                            //add overall data line
+                            if(box.attr('id')  === "overall-top5" ){
+                                //set data to top
+                            }
+                            else if(box.attr('id')  === "overall-fourth" ){
+
+                            }
+                             else if(box.attr('id')  === "overall-third" ){
+                                
+                            }
+                             else if(box.attr('id')  === "overall-second" ){
+                                
+                            }
+                             else if(box.attr('id')  === "overall-first" ){
+                                
+                            }
+
+
+                        }
+                        else if(box.classed('asian')){
+                             //add overall data line
+                            if(box.attr('id')  === "asian-top5" ){
+                                //set data to top
+                            }
+                            else if(box.attr('id')  === "asian-fourth" ){
+
+                            }
+                             else if(box.attr('id')  === "asian-third" ){
+                                
+                            }
+                             else if(box.attr('id')  === "asian-second" ){
+                                
+                            }
+                             else if(box.attr('id')  === "asian-first" ){
+                                
+                            }
+                        }
+                        else if(box.classed('black')){
+                             //add overall data line
+                            if(box.attr('id')  === "black-top5" ){
+                                //set data to top
+                            }
+                            else if(box.attr('id')  === "black-fourth" ){
+
+                            }
+                             else if(box.attr('id')  === "black-third" ){
+                                
+                            }
+                             else if(box.attr('id')  === "black-second" ){
+                                
+                            }
+                             else if(box.attr('id')  === "black-first" ){
+                                
+                            }
+                        }
+                        else if(box.classed('hispanic')){
+                             //add overall data line
+                            if(box.attr('id')  === "hispanic-top5" ){
+                                //set data to top
+                            }
+                            else if(box.attr('id')  === "hispanic-fourth" ){
+
+                            }
+                             else if(box.attr('id')  === "hispanic-third" ){
+                                
+                            }
+                             else if(box.attr('id')  === "hispanic-second" ){
+                                
+                            }
+                             else if(box.attr('id')  === "hispanic-first" ){
+                                
+                            }
+                        }
+                        else if(box.classed('white')){
+                             //add overall data line
+                            if(box.attr('id')  === "white-top5" ){
+                                //set data to top
+                            }
+                            else if(box.attr('id')  === "white-fourth" ){
+
+                            }
+                             else if(box.attr('id')  === "white-third" ){
+                                
+                            }
+                             else if(box.attr('id')  === "white-second" ){
+                                
+                            }
+                             else if(box.attr('id')  === "white-first" ){
+                                
+                            }
+                        }
+                    }
+               })
+            }
+        })
+
+
+
+
+
     }
 
     drawPath(path, color) {
