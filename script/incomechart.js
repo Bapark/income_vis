@@ -15,7 +15,6 @@ class IncomeTimePlot {
         this.data = data;
 
         this.drawPlot();
-        console.log(this.data);
 
     }
 
@@ -104,15 +103,12 @@ class IncomeTimePlot {
         paths = paths.merge(pathsEnter);
 
         let lineFn = d3.line()
-                        .x((d) => {that.xScale(new Date(d.year, 0, 1, 0))})
-                        .y((d) => {that.yScale(d.value)});
-        paths.attr('d', (d) => {
-            console.log(d);
-            console.log(lineFn(d));
-            return lineFn(d);
-        })
+                        .x((d) => that.xScale(new Date(d.year, 0, 1, 0)))
+                        .y((d) => that.yScale(d.value));
+        paths.attr('d', (d) => lineFn(d))
             .attr('stroke', 'black')
-            .attr('stroke-width', 2);
+            .attr('stroke-width', 2)
+            .attr('fill', 'none');
         
         
         
