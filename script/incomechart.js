@@ -53,7 +53,7 @@ class IncomeTimePlot {
                                'rotate(-90)');
         
         this.xScale = d3.scaleTime()
-            .domain([new Date(1960, 0, 1, 0), new Date(2018, 0, 1, 0)])
+            .domain([new Date(1967, 0, 1, 0), new Date(2018, 0, 1, 0)])
             .range([0, this.width])
             .nice();
         this.yScale = d3.scaleLinear()
@@ -103,8 +103,8 @@ class IncomeTimePlot {
         paths = paths.merge(pathsEnter);
 
         let lineFn = d3.line()
-                        .x((d) => that.xScale(new Date(d.year, 0, 1, 0)))
-                        .y((d) => that.yScale(d.value));
+                        .x((d) => that.xScale(new Date(d.year, 0, 1, 0)) + that.margin.left)
+                        .y((d) => that.yScale(d.value) + that.margin.top);
         paths.attr('d', (d) => lineFn(d))
             .attr('stroke', 'black')
             .attr('stroke-width', 2)
