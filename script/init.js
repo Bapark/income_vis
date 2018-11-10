@@ -31,14 +31,16 @@ async function loadRaceData(){
 	
 	//globalscope
 	incomeTimePlot = new IncomeTimePlot(raceData);
-	let subboxes = document.getElementsByClassName('sub-button');
-	
-	
 	d3.selectAll('.sub-button').on('change', incomeTimePlot.updatePlot);
-	d3.selectAll('.top-level-button').on('change', incomeTimePlot.updatePlot);
-	
-
-
+	d3.selectAll('.top-level-button').on('change', () => {
+		let src = d3.event.originalTarget;
+		d3.selectAll(`.${src.classList[1]}`)
+			.nodes()
+			.forEach((elem) => {
+				elem.checked = src.checked;
+			});
+		incomeTimePlot.updatePlot();
+	});
 }
 
 loadRaceData();

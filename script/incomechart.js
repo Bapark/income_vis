@@ -15,6 +15,7 @@ class IncomeTimePlot {
         this.data = data;
 
         this.drawPlot();
+        console.log(this.data);
 
     }
 
@@ -78,6 +79,7 @@ class IncomeTimePlot {
     }
 
     updatePlot() {
+        console.log('clicked');
         let that = this;
         let checked = document.querySelectorAll('input[class=sub-button]:checked');
         let checks = document.getElementsByClassName('sub-button');
