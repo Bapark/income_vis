@@ -19,9 +19,7 @@ class IncomeTimePlot {
 
     }
 
-    drawPlot() {
-       
-          
+    drawPlot() { 
         this.svg = d3.select('#incomeLineDiv')
             .append('svg')
             .attr('width', this.width + this.margin.left + this.margin.right)
@@ -70,7 +68,10 @@ class IncomeTimePlot {
         yAxis.scale(this.yScale)
             .ticks(10);
         d3.select('#x-axis').call(xAxis);
-        d3.select('#y-axis').call(yAxis);   
+        d3.select('#y-axis').call(yAxis);
+        
+        this.lineGroup = this.svg.append('g')
+                    .attr('id', 'line-group');
 
 
 
@@ -79,15 +80,43 @@ class IncomeTimePlot {
     }
 
     updatePlot() {
-        console.log('clicked');
         let that = this;
-        let checked = document.querySelectorAll('input[class=sub-button]:checked');
-        let checks = document.getElementsByClassName('sub-button');
+        let checked = document.querySelectorAll('input.sub-button:checked');
 
-        let majorBoxes = d3.selectAll('.top-level-button');
+        let nextData = [];
 
-        let nextData = {}; //TODO build data to draw lines based on what is checked
+        checked.forEach((elem) => {
+            let arr = elem.id.split('-');
 
+            let d = that.data[arr[0]].map(elem => {
+                return { 
+                            'value': parseInt(elem[arr[1]]),
+                            'year' : parseInt(elem.year)
+                        };
+            });
+            nextData.push(d);
+        });
+
+        let paths = this.lineGroup.selectAll('path')
+                            .data(nextData);
+        let pathsEnter = paths.enter().append('path');
+        paths.exit().remove();
+        paths = paths.merge(pathsEnter);
+
+        let lineFn = d3.line()
+                        .x((d) => {that.xScale(new Date(d.year, 0, 1, 0))})
+                        .y((d) => {that.yScale(d.value)});
+        paths.attr('d', (d) => {
+            console.log(d);
+            console.log(lineFn(d));
+            return lineFn(d);
+        })
+            .attr('stroke', 'black')
+            .attr('stroke-width', 2);
+        
+        
+        
+/*         let majorBoxes = d3.selectAll('.top-level-button');
         majorBoxes.each(function(){
             
             let thisbox = d3.select(this);
@@ -196,12 +225,7 @@ class IncomeTimePlot {
                     }
                })
             }
-        })
-
-
-
-
-
+        }) */
     }
 
     drawPath(path, color) {

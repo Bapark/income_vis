@@ -21,11 +21,11 @@ async function loadRaceData(){
 	let whitedata = await  d3.csv("data/h01WNH.csv");
 
 	let raceData = {
-		Overall : allRaces,
-		Asian : asiandata,
-		Black : blackdata,
-		Hispanic : hispdata,
-		White : whitedata
+		overall : allRaces,
+		asian : asiandata,
+		black : blackdata,
+		hispanic : hispdata,
+		white : whitedata
 	}
 
 	
