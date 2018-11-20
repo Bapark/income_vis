@@ -15,6 +15,19 @@ class IncomeTimePlot {
         this.data = data;
 
         this.drawPlot();
+        let length = [1,2,3,4,5];
+        this.whiteColorScale=d3.scale.linear().domain([1,length])
+            .interpolate(d3.interpolateHcl)
+            .range([d3.rgb("#E51A00"), d3.rgb('#EECCC3')]);
+        this.blackColorScale= d3.scale.linear().domain([1,length])
+            .interpolate(d3.interpolateHcl)
+            .range([d3.rgb("#0B3AE5"), d3.rgb('#ACBBEC')]);
+        this.asianColorScale d3.scale.linear().domain([1,length])
+            .interpolate(d3.interpolateHcl)
+            .range([d3.rgb("#00A80F"), d3.rgb('#D4F4D2')]);
+        this.allColorScale d3.scale.linear().domain([1,length])
+            .interpolate(d3.interpolateHcl)
+            .range([d3.rgb("#7000A8"), d3.rgb('#EFDBF5')]);
 
     }
 
@@ -98,6 +111,7 @@ class IncomeTimePlot {
 
         let paths = this.lineGroup.selectAll('path')
                             .data(nextData);
+
         let pathsEnter = paths.enter().append('path');
         paths.exit().remove();
         paths = paths.merge(pathsEnter);
@@ -106,122 +120,11 @@ class IncomeTimePlot {
                         .x((d) => that.xScale(new Date(d.year, 0, 1, 0)) + that.margin.left)
                         .y((d) => that.yScale(d.value) + that.margin.top);
         paths.attr('d', (d) => lineFn(d))
-            .attr('stroke', 'black')
+            .attr('stroke', 'black') //TODO add color scales
             .attr('stroke-width', 2)
             .attr('fill', 'none');
         
-        
-        
-/*         let majorBoxes = d3.selectAll('.top-level-button');
-        majorBoxes.each(function(){
-            
-            let thisbox = d3.select(this);
-
-            if(thisbox.property('checked')){
-               let parent = d3.select(this.parentNode);
-               let buttons = parent.selectAll('.sub-button');
-
-               buttons.each(function(){
-                //if this equals 
-               
-                    let box = d3.select(this);
-                    if(box.property('checked')){
-                        if(box.classed('overall')){
-                            //add overall data line
-                            if(box.attr('id')  === "overall-top5" ){
-                                //set data to top
-                            }
-                            else if(box.attr('id')  === "overall-fourth" ){
-
-                            }
-                             else if(box.attr('id')  === "overall-third" ){
-                                
-                            }
-                             else if(box.attr('id')  === "overall-second" ){
-                                
-                            }
-                             else if(box.attr('id')  === "overall-first" ){
-                                
-                            }
-
-
-                        }
-                        else if(box.classed('asian')){
-                             //add overall data line
-                            if(box.attr('id')  === "asian-top5" ){
-                                //set data to top
-                            }
-                            else if(box.attr('id')  === "asian-fourth" ){
-
-                            }
-                             else if(box.attr('id')  === "asian-third" ){
-                                
-                            }
-                             else if(box.attr('id')  === "asian-second" ){
-                                
-                            }
-                             else if(box.attr('id')  === "asian-first" ){
-                                
-                            }
-                        }
-                        else if(box.classed('black')){
-                             //add overall data line
-                            if(box.attr('id')  === "black-top5" ){
-                                //set data to top
-                            }
-                            else if(box.attr('id')  === "black-fourth" ){
-
-                            }
-                             else if(box.attr('id')  === "black-third" ){
-                                
-                            }
-                             else if(box.attr('id')  === "black-second" ){
-                                
-                            }
-                             else if(box.attr('id')  === "black-first" ){
-                                
-                            }
-                        }
-                        else if(box.classed('hispanic')){
-                             //add overall data line
-                            if(box.attr('id')  === "hispanic-top5" ){
-                                //set data to top
-                            }
-                            else if(box.attr('id')  === "hispanic-fourth" ){
-
-                            }
-                             else if(box.attr('id')  === "hispanic-third" ){
-                                
-                            }
-                             else if(box.attr('id')  === "hispanic-second" ){
-                                
-                            }
-                             else if(box.attr('id')  === "hispanic-first" ){
-                                
-                            }
-                        }
-                        else if(box.classed('white')){
-                             //add overall data line
-                            if(box.attr('id')  === "white-top5" ){
-                                //set data to top
-                            }
-                            else if(box.attr('id')  === "white-fourth" ){
-
-                            }
-                             else if(box.attr('id')  === "white-third" ){
-                                
-                            }
-                             else if(box.attr('id')  === "white-second" ){
-                                
-                            }
-                             else if(box.attr('id')  === "white-first" ){
-                                
-                            }
-                        }
-                    }
-               })
-            }
-        }) */
+       
     }
 
     drawPath(path, color) {
