@@ -1,7 +1,7 @@
 
 
 d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
-    console.log(incomedata);
+    //console.log(incomedata);
    
 });
 

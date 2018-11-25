@@ -10,25 +10,35 @@ class PlotData {
 class IncomeTimePlot {
     constructor(data) {
         this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
-        this.width = 810 - this.margin.left - this.margin.right;
+        this.width = 875 - this.margin.left - this.margin.right;
         this.height = 500 - this.margin.top - this.margin.bottom;
         this.data = data;
 
-        this.drawPlot();
-        let length = [1,2,3,4,5];
-        this.whiteColorScale=d3.scale.linear().domain([1,length])
-            .interpolate(d3.interpolateHcl)
-            .range([d3.rgb("#E51A00"), d3.rgb('#EECCC3')]);
-        this.blackColorScale= d3.scale.linear().domain([1,length])
-            .interpolate(d3.interpolateHcl)
-            .range([d3.rgb("#0B3AE5"), d3.rgb('#ACBBEC')]);
-        this.asianColorScale d3.scale.linear().domain([1,length])
-            .interpolate(d3.interpolateHcl)
-            .range([d3.rgb("#00A80F"), d3.rgb('#D4F4D2')]);
-        this.allColorScale d3.scale.linear().domain([1,length])
-            .interpolate(d3.interpolateHcl)
-            .range([d3.rgb("#7000A8"), d3.rgb('#EFDBF5')]);
+        this.colorScales = {};
 
+        this.colorScales.overall = d3.scaleLinear().domain([1,5])
+                                    //.interpolate(d3.interpolateHcl)
+                                    .range([d3.rgb('#000000'), d3.rgb('#d3d3d3')]);
+        this.colorScales.white = d3.scaleLinear().domain([1,5])
+                                    //.interpolate(d3.interpolateHcl)
+                                    .range([d3.rgb("#E51A00"), d3.rgb('#EECCC3')]);
+        this.colorScales.black = d3.scaleLinear().domain([1,5])
+                                    //.interpolate(d3.interpolateHcl)
+                                    .range([d3.rgb("#0B3AE5"), d3.rgb('#ACBBEC')]);
+        this.colorScales.asian = d3.scaleLinear().domain([1,5])
+                                    //.interpolate(d3.interpolateHcl)
+                                    .range([d3.rgb("#00A80F"), d3.rgb('#D4F4D2')]);
+        this.colorScales.hispanic = d3.scaleLinear().domain([1,5])
+                                    //.interpolate(d3.interpolateHcl)
+                                    .range([d3.rgb("#7000A8"), d3.rgb('#EFDBF5')]);
+
+        this.colorScales.top5 = 1;
+        this.colorScales.fourth = 2;
+        this.colorScales.third = 3;
+        this.colorScales.second = 4;
+        this.colorScales.lowest = 5;
+
+        this.drawPlot();
     }
 
     drawPlot() { 
@@ -62,7 +72,7 @@ class IncomeTimePlot {
             .text('USD (2017)'.toUpperCase())
             .attr('id', 'y-axis-label')
             .classed('axis-label', true)
-            .attr('transform', 'translate(10, ' + (this.height/2 + this.margin.bottom) + ') ' +
+            .attr('transform', 'translate(20, ' + (this.height/2 + this.margin.bottom) + ') ' +
                                'rotate(-90)');
         
         this.xScale = d3.scaleTime()
@@ -100,15 +110,17 @@ class IncomeTimePlot {
         checked.forEach((elem) => {
             let arr = elem.id.split('-');
 
-            let d = that.data[arr[0]].map(elem => {
+            let d = {};
+            d.data = that.data[arr[0]].map(elem => {
                 return { 
                             'value': parseInt(elem[arr[1]]),
                             'year' : parseInt(elem.year)
                         };
             });
+            d.category = arr[0];
+            d.pentile = arr[1];
             nextData.push(d);
         });
-
         let paths = this.lineGroup.selectAll('path')
                             .data(nextData);
 
@@ -119,8 +131,9 @@ class IncomeTimePlot {
         let lineFn = d3.line()
                         .x((d) => that.xScale(new Date(d.year, 0, 1, 0)) + that.margin.left)
                         .y((d) => that.yScale(d.value) + that.margin.top);
-        paths.attr('d', (d) => lineFn(d))
-            .attr('stroke', 'black') //TODO add color scales
+        paths.attr('d', (d) => lineFn(d.data))
+            .attr('stroke', (d) => {
+                return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
             .attr('stroke-width', 2)
             .attr('fill', 'none');
         
