@@ -33,20 +33,35 @@ async function loadData(){
 	medianIncomeData.black = await  d3.csv("data/h03B.csv", incomeFormatter);
 	medianIncomeData.hispanic = await  d3.csv("data/h03H.csv", incomeFormatter);
 	medianIncomeData.white = await  d3.csv("data/h03WNH.csv", incomeFormatter);
-	
-	console.log(medianIncomeData);
 
 	let incomeShareData = {};
-	incomeShareData.overall = await d3.csv('data/h02AR.csv');
-	incomeShareData.asian = await d3.csv('data/h02A.csv');
-	incomeShareData.black = await d3.csv('data/h02B.csv');
-	incomeShareData.hispanic = await d3.csv('data/h02H.csv');
-	incomeShareData.white = await d3.csv('data/h02WNH.csv');
+	let aggregateFormater = function(data){
+		let val = {
+			year : parseInt(data.year),
+			number : parseInt(data.number),
+			lowest : parseFloat(data.lowest),
+			second : parseFloat(data.second),
+			third :  parseFloat(data.third),
+			fourth : parseFloat(data.fourth),
+			highest :parseFloat(data.highest),
+			top5 :   parseFloat(data.top5)
+		};
+		val.highest = val.highest - val.top5;
+		return val;
+	}
+	incomeShareData.overall = await d3.csv('data/h02AR.csv', aggregateFormater);
+	incomeShareData.asian = await d3.csv('data/h02A.csv', aggregateFormater);
+	incomeShareData.black = await d3.csv('data/h02B.csv', aggregateFormater);
+	incomeShareData.hispanic = await d3.csv('data/h02H.csv', aggregateFormater);
+	incomeShareData.white = await d3.csv('data/h02WNH.csv', aggregateFormater);
 
 	//globalscope
 	incomeTimePlot = new IncomeTimePlot(medianIncomeData);
 	aggregateIncomeBarPlot = new AggregateIncomeBarPlot(incomeShareData);
-	d3.selectAll('.sub-button').on('change', () => incomeTimePlot.updatePlot());
+	d3.selectAll('.sub-button').on('change', () => {
+		incomeTimePlot.updatePlot();
+		aggregateIncomeBarPlot.updatePlot();
+	});
 	d3.selectAll('.top-level-button').on('change', () => {
 		let src = d3.event.originalTarget;
 		d3.selectAll(`.${src.classList[1]}`)
@@ -55,6 +70,7 @@ async function loadData(){
 				elem.checked = src.checked;
 			});
 		incomeTimePlot.updatePlot();
+		aggregateIncomeBarPlot.updatePlot();
 	});
 }
 
