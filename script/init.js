@@ -41,6 +41,7 @@ async function loadData(){
 
 	//globalscope
 	incomeTimePlot = new IncomeTimePlot(medianIncomeData);
+	aggregateIncomeBarPlot = new AggregateIncomeBarPlot(incomeShareData);
 	d3.selectAll('.sub-button').on('change', () => incomeTimePlot.updatePlot());
 	d3.selectAll('.top-level-button').on('change', () => {
 		let src = d3.event.originalTarget;

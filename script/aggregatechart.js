@@ -1,8 +1,9 @@
 /**
  * Class for drawing line chart of income through the years
  */
-class IncomeTimePlot {
+class AggregateIncomeBarPlot {
     constructor(data) {
+        console.log(data);
         this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
         this.width = 875 - this.margin.left - this.margin.right;
         this.height = 500 - this.margin.top - this.margin.bottom;
@@ -10,34 +11,28 @@ class IncomeTimePlot {
 
         this.colorScales = {};
 
-        this.colorScales.overall = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
+        this.colorScales.overall = d3.scaleLinear().domain([1,5])
                                     .range([d3.rgb('#000000'), d3.rgb('#d3d3d3')]);
-        this.colorScales.white = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
+        this.colorScales.white = d3.scaleLinear().domain([1,5])
                                     .range([d3.rgb("#E51A00"), d3.rgb('#EECCC3')]);
-        this.colorScales.black = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
+        this.colorScales.black = d3.scaleLinear().domain([1,5])
                                     .range([d3.rgb("#0B3AE5"), d3.rgb('#ACBBEC')]);
-        this.colorScales.asian = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
+        this.colorScales.asian = d3.scaleLinear().domain([1,5])
                                     .range([d3.rgb("#00A80F"), d3.rgb('#D4F4D2')]);
-        this.colorScales.hispanic = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
+        this.colorScales.hispanic = d3.scaleLinear().domain([1,5])
                                     .range([d3.rgb("#7000A8"), d3.rgb('#EFDBF5')]);
 
         this.colorScales.top5 = 1;
-        this.colorScales.highest = 2;
-        this.colorScales.fourth = 3;
-        this.colorScales.third = 4;
-        this.colorScales.second = 5;
-        this.colorScales.lowest = 6;
+        this.colorScales.fourth = 2;
+        this.colorScales.third = 3;
+        this.colorScales.second = 4;
+        this.colorScales.lowest = 5;
 
         this.drawPlot();
     }
 
     drawPlot() { 
-        this.svg = d3.select('#incomeLineDiv')
+        this.svg = d3.select('#aggregateBarsDiv')
             .append('svg')
             .attr('width', this.width + this.margin.left + this.margin.right)
             .attr('height', this.height + this.margin.top + this.margin.bottom);
@@ -46,31 +41,30 @@ class IncomeTimePlot {
 
         //Text and axes skeleton
         svgGroup.append('g')
-            .attr('id', 'x-axis-incomechart')
+            .attr('id', 'x-axis-aggregatechart')
             .attr('transform', 'translate(' + this.margin.left + ',' + (this.height + this.margin.top) +')')
             .classed('axis', true);
         svgGroup.append('g')
-            .attr('id', 'y-axis-incomechart')
+            .attr('id', 'y-axis-aggregatechart')
             .attr('transform', 'translate(' + this.margin.left + ', ' + this.margin.top + ')')
             .classed('axis', true);
         svgGroup.append('text')
-            .text('year'.toUpperCase())
-            .attr('id', 'x-axis-label-incomechart')
+            .text('category'.toUpperCase())
+            .attr('id', 'x-axis-label-aggregatechart')
             .classed('axis-label', true)
             .attr('transform', 'translate(' + (this.width/2 + this.margin.left) + ', ' + (this.height + this.margin.bottom) + ')');
         svgGroup.append('text')
-            .text('USD (2017)'.toUpperCase())
-            .attr('id', 'y-axis-label-incomechart')
+            .text('Total Income Share (%)'.toUpperCase())
+            .attr('id', 'y-axis-label-aggregatechart')
             .classed('axis-label', true)
-            .attr('transform', 'translate(20, ' + (this.height/2 + this.margin.bottom) + ') ' +
+            .attr('transform', 'translate(20, ' + (this.height * 0.60 + this.margin.bottom) + ') ' +
                                'rotate(-90)');
         
-        this.xScale = d3.scaleTime()
-            .domain([new Date(1967, 0, 1, 0), new Date(2018, 0, 1, 0)])
-            .range([0, this.width])
-            .nice();
+        this.xScale = d3.scaleBand()
+            .domain(['Temp1', 'Temp2'])
+            .range([0, this.width]);
         this.yScale = d3.scaleLinear()
-            .domain([0, 550000])
+            .domain([0, 300000])
             .range([this.height, 0])
             .nice();
 
@@ -79,11 +73,11 @@ class IncomeTimePlot {
         xAxis.scale(this.xScale);
         yAxis.scale(this.yScale)
             .ticks(10);
-        d3.select('#x-axis-incomechart').call(xAxis);
-        d3.select('#y-axis-incomechart').call(yAxis);
+        d3.select('#x-axis-aggregatechart').call(xAxis);
+        d3.select('#y-axis-aggregatechart').call(yAxis);
         
-        this.lineGroup = this.svg.append('g')
-                    .attr('id', 'line-group-incomechart');
+        this.barGroup = this.svg.append('g')
+                    .attr('id', 'bar-group-aggregatechart');
 
 
 
@@ -111,7 +105,7 @@ class IncomeTimePlot {
             d.pentile = arr[1];
             nextData.push(d);
         });
-        let paths = this.lineGroup.selectAll('path')
+        let paths = this.barGroup.selectAll('path')
                             .data(nextData);
 
         let pathsEnter = paths.enter().append('path');
@@ -120,8 +114,7 @@ class IncomeTimePlot {
 
         let lineFn = d3.line()
                         .x((d) => that.xScale(new Date(d.year, 0, 1, 0)) + that.margin.left)
-                        .y((d) => that.yScale(d.value) + that.margin.top)
-                        .curve(d3.curveStep);
+                        .y((d) => that.yScale(d.value) + that.margin.top);
         paths.attr('d', (d) => lineFn(d.data))
             .attr('stroke', (d) => {
                 return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
