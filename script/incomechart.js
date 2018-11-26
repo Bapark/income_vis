@@ -16,27 +16,28 @@ class IncomeTimePlot {
 
         this.colorScales = {};
 
-        this.colorScales.overall = d3.scaleLinear().domain([1,5])
+        this.colorScales.overall = d3.scaleLinear().domain([1,6])
                                     //.interpolate(d3.interpolateHcl)
                                     .range([d3.rgb('#000000'), d3.rgb('#d3d3d3')]);
-        this.colorScales.white = d3.scaleLinear().domain([1,5])
+        this.colorScales.white = d3.scaleLinear().domain([1,6])
                                     //.interpolate(d3.interpolateHcl)
                                     .range([d3.rgb("#E51A00"), d3.rgb('#EECCC3')]);
-        this.colorScales.black = d3.scaleLinear().domain([1,5])
+        this.colorScales.black = d3.scaleLinear().domain([1,6])
                                     //.interpolate(d3.interpolateHcl)
                                     .range([d3.rgb("#0B3AE5"), d3.rgb('#ACBBEC')]);
-        this.colorScales.asian = d3.scaleLinear().domain([1,5])
+        this.colorScales.asian = d3.scaleLinear().domain([1,6])
                                     //.interpolate(d3.interpolateHcl)
                                     .range([d3.rgb("#00A80F"), d3.rgb('#D4F4D2')]);
-        this.colorScales.hispanic = d3.scaleLinear().domain([1,5])
+        this.colorScales.hispanic = d3.scaleLinear().domain([1,6])
                                     //.interpolate(d3.interpolateHcl)
                                     .range([d3.rgb("#7000A8"), d3.rgb('#EFDBF5')]);
 
         this.colorScales.top5 = 1;
-        this.colorScales.fourth = 2;
-        this.colorScales.third = 3;
-        this.colorScales.second = 4;
-        this.colorScales.lowest = 5;
+        this.colorScales.highest = 2;
+        this.colorScales.fourth = 3;
+        this.colorScales.third = 4;
+        this.colorScales.second = 5;
+        this.colorScales.lowest = 6;
 
         this.drawPlot();
     }
@@ -80,7 +81,7 @@ class IncomeTimePlot {
             .range([0, this.width])
             .nice();
         this.yScale = d3.scaleLinear()
-            .domain([0, 300000])
+            .domain([0, 550000])
             .range([this.height, 0])
             .nice();
 
