@@ -22,7 +22,6 @@
 </div>
 
 <div id ="incomeLineChart" class = "wrapper">
-    <h2>Income By the Years</h2>
     <div id="radioSelectors" class = "inline">
         <div id='overall-button-group' class='button-group'>
             <input type='checkbox' class='top-level-button overall' id="overall-top" checked> Overall</br>
@@ -70,8 +69,16 @@
             <input type='checkbox' class='sub-button white' id='white-lowest'> Lowest</br>
         </div>
     </div>
-    <div id="incomeLineDiv" class = "view inline"></div>
-    <p>*Highest refers to the 80th-94th percentiles</p>
+    <div class = 'inline inner-wrapper'>
+        <div id="incomeLineDiv" class = "view">
+            <h2>Income By the Years</h2>
+        </div>
+        <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
+        <div id="aggregateBarsDiv" class = "view">
+            <h2>Aggregated Wealth Shares</h2>
+        </div>
+        <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
+    </div>
 </div>
 <div id = "yearslider" class = "">
     
@@ -79,6 +86,7 @@
 
 <!--Add scripts for interactivity-->
 <script type="application/javascript" src="script/incomechart.js"></script>
+<script type="application/javascript" src="script/aggregatechart.js"></script>
 <script type="application/javascript" src="script/init.js"></script>
 
 

@@ -11,44 +11,57 @@ d3.csv("data/highest_marginal_income_taxrates.csv").then(incomedata => {
 });
 
 //setup racial data sets 
+async function loadData(){
 
+	let medianIncomeData = {};
+	let incomeFormatter = function(data){
+		let val =  {
+			year : parseInt(data.year),
+			lowest : parseInt(data.lowest),
+			second : parseInt(data.second),
+			third : parseInt(data.third),
+			fourth : parseInt(data.fourth),
+			highest : parseInt(data.highest),
+			top5 : parseInt(data.top5)
+		};
 
-async function loadRaceData(){
-	let allRaces =  await d3.csv("data/h03AR.csv");
-
-	let asiandata = await  d3.csv("data/h03A.csv");
-
-	let blackdata = await  d3.csv("data/h03B.csv");
-
-	let hispdata = await  d3.csv("data/h03H.csv");
-
-	let whitedata = await  d3.csv("data/h03WNH.csv");
-
-	let raceData = {
-		overall : allRaces,
-		asian : asiandata,
-		black : blackdata,
-		hispanic : hispdata,
-		white : whitedata
+		val.highest = (4 * val.highest - val.top5) / 3;
+		return val;
 	}
+	medianIncomeData.overall =  await d3.csv("data/h03AR.csv", incomeFormatter)
+	medianIncomeData.asian = await  d3.csv("data/h03A.csv", incomeFormatter);
+	medianIncomeData.black = await  d3.csv("data/h03B.csv", incomeFormatter);
+	medianIncomeData.hispanic = await  d3.csv("data/h03H.csv", incomeFormatter);
+	medianIncomeData.white = await  d3.csv("data/h03WNH.csv", incomeFormatter);
 
-	console.log(raceData);
-
-	let removeTopFiveFromHighest = function(dataSet) {
-		dataSet.forEach(elem => {
-			//formula to tease out average
-			dataSet.highest = (4 * dataSet.highest + dataSet.top5)/3;
-		});
+	let incomeShareData = {};
+	let aggregateFormater = function(data){
+		let val = {
+			year : parseInt(data.year),
+			number : parseInt(data.number),
+			lowest : parseFloat(data.lowest),
+			second : parseFloat(data.second),
+			third :  parseFloat(data.third),
+			fourth : parseFloat(data.fourth),
+			highest :parseFloat(data.highest),
+			top5 :   parseFloat(data.top5)
+		};
+		val.highest = val.highest - val.top5;
+		return val;
 	}
-	removeTopFiveFromHighest(raceData.overall);
-	removeTopFiveFromHighest(raceData.asian);
-	removeTopFiveFromHighest(raceData.black);
-	removeTopFiveFromHighest(raceData.hispanic);
-	removeTopFiveFromHighest(raceData.white);
-	
+	incomeShareData.overall = await d3.csv('data/h02AR.csv', aggregateFormater);
+	incomeShareData.asian = await d3.csv('data/h02A.csv', aggregateFormater);
+	incomeShareData.black = await d3.csv('data/h02B.csv', aggregateFormater);
+	incomeShareData.hispanic = await d3.csv('data/h02H.csv', aggregateFormater);
+	incomeShareData.white = await d3.csv('data/h02WNH.csv', aggregateFormater);
+
 	//globalscope
-	incomeTimePlot = new IncomeTimePlot(raceData);
-	d3.selectAll('.sub-button').on('change', () => incomeTimePlot.updatePlot());
+	incomeTimePlot = new IncomeTimePlot(medianIncomeData);
+	aggregateIncomeBarPlot = new AggregateIncomeBarPlot(incomeShareData);
+	d3.selectAll('.sub-button').on('change', () => {
+		incomeTimePlot.updatePlot();
+		aggregateIncomeBarPlot.updatePlot();
+	});
 	d3.selectAll('.top-level-button').on('change', () => {
 		let src = d3.event.originalTarget;
 		d3.selectAll(`.${src.classList[1]}`)
@@ -57,9 +70,10 @@ async function loadRaceData(){
 				elem.checked = src.checked;
 			});
 		incomeTimePlot.updatePlot();
+		aggregateIncomeBarPlot.updatePlot();
 	});
 }
 
-loadRaceData();
+loadData();
 
 //TODO construct view
