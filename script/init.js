@@ -14,23 +14,27 @@ d3.csv("data/highest_marginal_income_taxrates.csv").then(incomedata => {
 async function loadData(){
 
 	let medianIncomeData = {};
-	medianIncomeData.overall =  await d3.csv("data/h03AR.csv");
-	medianIncomeData.asian = await  d3.csv("data/h03A.csv");
-	medianIncomeData.black = await  d3.csv("data/h03B.csv");
-	medianIncomeData.hispanic = await  d3.csv("data/h03H.csv");
-	medianIncomeData.white = await  d3.csv("data/h03WNH.csv");
-	
-	let removeTopFiveFromHighest = function(dataSet) {
-		dataSet.forEach(elem => {
-			//formula to tease out average
-			dataSet.highest = (4 * dataSet.highest + dataSet.top5)/3;
-		});
+	let incomeFormatter = function(data){
+		let val =  {
+			year : parseInt(data.year),
+			lowest : parseInt(data.lowest),
+			second : parseInt(data.second),
+			third : parseInt(data.third),
+			fourth : parseInt(data.fourth),
+			highest : parseInt(data.highest),
+			top5 : parseInt(data.top5)
+		};
+
+		val.highest = (4 * val.highest - val.top5) / 3;
+		return val;
 	}
-	removeTopFiveFromHighest(medianIncomeData.overall);
-	removeTopFiveFromHighest(medianIncomeData.asian);
-	removeTopFiveFromHighest(medianIncomeData.black);
-	removeTopFiveFromHighest(medianIncomeData.hispanic);
-	removeTopFiveFromHighest(medianIncomeData.white);
+	medianIncomeData.overall =  await d3.csv("data/h03AR.csv", incomeFormatter)
+	medianIncomeData.asian = await  d3.csv("data/h03A.csv", incomeFormatter);
+	medianIncomeData.black = await  d3.csv("data/h03B.csv", incomeFormatter);
+	medianIncomeData.hispanic = await  d3.csv("data/h03H.csv", incomeFormatter);
+	medianIncomeData.white = await  d3.csv("data/h03WNH.csv", incomeFormatter);
+	
+	console.log(medianIncomeData);
 
 	let incomeShareData = {};
 	incomeShareData.overall = await d3.csv('data/h02AR.csv');
