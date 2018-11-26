@@ -1,12 +1,6 @@
 /**
- * Wrapper class for data that goes in the plot
+ * Class for drawing line chart of income through the years
  */
-class PlotData {
-    constructor() {
-
-    }
-}
-
 class IncomeTimePlot {
     constructor(data) {
         this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
