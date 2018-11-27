@@ -72,6 +72,12 @@ async function loadData(){
 		incomeTimePlot.updatePlot();
 		aggregateIncomeBarPlot.updatePlot();
 	});
+
+
+	//load wealth
+	let wealthData = await d3.csv('data/wealthdata.csv');
+	wealthChart = new WealthChart(wealthData);
+
 }
 
 loadData();
