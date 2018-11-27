@@ -75,7 +75,28 @@ async function loadData(){
 
 
 	//load wealth
-	let wealthData = await d3.csv('data/wealthdata.csv');
+	let wealthFormater = function(data) {
+		let val = {
+			year : parseInt(data.year),
+			bottom_90 : parseFloat(data.bottom90),
+			top_10 : parseFloat(data.top10),
+			top_5 : parseFloat(data.top5),
+			top_1 :  parseFloat(data.top1),
+			top_0_5 : parseFloat(data.top0_5),
+			top_0_1 :parseFloat(data.top0_1),
+			top_0_01 :   parseFloat(data.top0_01)
+		};
+		//Precalculate bins
+		val['90-95'] = val.top_10 - val.top_5;
+		val['95-99'] = val.top_5 - val.top_1;
+		val['99-99.5'] = val.top_1 - val.top_0_5;
+		val['99.5-99.9'] = val.top_0_5 - val.top_0_1;
+		val['99.9-99.99'] = val.top_0_1 - val.top_0_01;
+		
+		return val;
+	}
+	let wealthData = await d3.csv('data/wealthdata.csv', wealthFormater);
+	console.log(wealthData);
 	wealthChart = new WealthChart(wealthData);
 
 }
