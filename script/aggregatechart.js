@@ -63,7 +63,7 @@ class AggregateIncomeBarPlot {
             .text('category'.toUpperCase())
             .attr('id', 'x-axis-label-aggregatechart')
             .classed('axis-label', true)
-            .attr('transform', 'translate(' + (this.width/2 + this.margin.left) + ', ' + (this.height + this.margin.bottom) + ')');
+            .attr('transform', 'translate(' + (this.width/2 + this.margin.left) + ', ' + (this.height + this.margin.bottom + 10) + ')');
         svgGroup.append('text')
             .text('Total Income Share (%)'.toUpperCase())
             .attr('id', 'y-axis-label-aggregatechart')
@@ -137,9 +137,39 @@ class AggregateIncomeBarPlot {
             .attr('y', (d) => this.yScale(d.value));
         this.barGroup
             .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+
+        var insertLinebreaks = function (abbreviate) {
+            return function(d) {
+                var el = d3.select(this);
+                var words = d.split(' ');
+                el.text('');
+            
+                for (var i = 0; i < words.length; i++) {
+                    if(abbreviate) {
+                        switch(words[i]) {
+                            case 'WHITE' : words[i] = 'W'; break;
+                            case 'HISPANIC' : words[i] = 'H'; break;
+                            case 'BLACK' : words[i] = 'B'; break;
+                            case 'ASIAN' : words[i] = 'A'; break;
+                            case 'OVERALL' : words[i] = 'OA'; break;
+                            case 'TOP5' : words[i] = 'T5'; break;
+                            case 'HIGHEST' : words[i] = 'HI'; break;
+                            case 'FOURTH' : words[i] = 'FTH'; break;
+                            case 'THIRD' : words[i] = 'THD'; break;
+                            case 'SECOND' : words[i] = 'SND'; break;
+                            case 'LOWEST' : words[i] = 'LOW'; break;
+                        }
+                    }
+                    var tspan = el.append('tspan').text(words[i]);
+                    if (i > 0)
+                        tspan.attr('x', 0).attr('dy', '15');
+                }
+            }
+        };
+        
+        if(nextData.length > 7) {
+            this.svg.selectAll('#x-axis-aggregatechart g text').each(insertLinebreaks(nextData.length > 10));
+        }
     }
 
-    drawPath(path, color) {
-
-    }
 }
