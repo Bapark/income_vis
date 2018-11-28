@@ -1,4 +1,8 @@
-
+if(!Array.prototype.last){
+	Array.prototype.last = function(){
+		return this[this.length - 1];
+	}
+}
 
 d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
     //console.log(incomedata);
