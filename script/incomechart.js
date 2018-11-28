@@ -57,6 +57,7 @@ class IncomeTimePlot {
             .text('year'.toUpperCase())
             .attr('id', 'x-axis-label-incomechart')
             .classed('axis-label', true)
+            .classed('text', true)
             .attr('transform', 'translate(' + (this.width/2 + this.margin.left) + ', ' + (this.height + this.margin.bottom) + ')');
         svgGroup.append('text')
             .text('USD (2017)'.toUpperCase())
