@@ -109,6 +109,28 @@ async function loadData(){
 		wealthChart.updateChart();
 	});
 
+	let incomeCards = await d3.json('data/incomecards.json');
+	let incomePresentationSideEffect = function (idx) {
+		//Update Selections
+		let topButtons = document.getElementsByClassName('top-level-button');
+		for(let i = 0; i < topButtons.length; i++){
+			topButtons[i].checked = true;
+			topButtons[i].click();
+		}
+		incomeCards.cards[idx].buttons.forEach((elem) => {
+			document.getElementById(elem)
+				.click();
+		});
+	}
+	let incomePresentation = new Presentation(incomeCards.cards, 
+								'#income-presentation-title', 
+								'#income-presentation-text-div',
+								incomePresentationSideEffect);
+	d3.select('#income-presentation-forward-button')
+		.on('click', () => incomePresentation.moveNext());
+	d3.select('#income-presentation-reverse-button')
+		.on('click', () => incomePresentation.movePrevious());
+
 }
 
 loadData();
