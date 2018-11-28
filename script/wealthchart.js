@@ -56,11 +56,6 @@ class WealthChart {
 				});
 		
 		let that = this;
-
-		let yearSlider = d3.select('#slider');
-		yearSlider.on('input', function() {
-            that.updateChart();                        
-        });
         
 
 		//todo set transition

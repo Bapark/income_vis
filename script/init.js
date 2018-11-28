@@ -99,6 +99,12 @@ async function loadData(){
 	console.log(wealthData);
 	wealthChart = new WealthChart(wealthData);
 
+	let yearSlider = d3.select('#slider');
+	yearSlider.on('input', function() {
+		aggregateIncomeBarPlot.updatePlot();
+		wealthChart.updateChart();
+	});
+
 }
 
 loadData();
