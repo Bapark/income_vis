@@ -6,18 +6,37 @@ class AggregateIncomeBarPlot {
         this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
         this.width = 875 - this.margin.left - this.margin.right;
         this.height = 500 - this.margin.top - this.margin.bottom;
+        this.header = d3.select('#aggregateHeader');
         this.data = data;
         this.reducedData = {};
         for(let race in this.data) {
-            this.reducedData[race] = this.data[race].reduce((accum, curr) => {
+            this.reducedData[race] = this.data[race].map((curr) => {
+                let tmp = {
+                    year : curr.year
+                };
                 for(let category in curr){
-                    if(category == 'year' || category == 'number'){
-                        continue;
+                    let factor = 1;
+                    switch (category) {
+                        case 'year' :
+                        case 'number' :
+                            continue;
+                        case 'lowest' :
+                        case 'second' :
+                        case 'third' :
+                        case 'fourth' :
+                            factor = 1 / 20;
+                            break;
+                        case 'highest' :
+                            factor = 1 / 15;
+                            break;
+                        case 'top5' :
+                            factor = 1 /5;
+                            break;
                     }
-                    accum[category] += curr[category];
+                    tmp[category] = curr[category] * factor * 1000;
                 }
-                return accum;
-            });
+                return tmp;
+            }); 
         }
 
         this.colorScales = {};
@@ -65,7 +84,7 @@ class AggregateIncomeBarPlot {
             .classed('axis-label', true)
             .attr('transform', 'translate(' + (this.width/2 + this.margin.left) + ', ' + (this.height + this.margin.bottom + 10) + ')');
         svgGroup.append('text')
-            .text('Total Income Share (%)'.toUpperCase())
+            .text('Share of $10,000'.toUpperCase())
             .attr('id', 'y-axis-label-aggregatechart')
             .classed('axis-label', true)
             .attr('transform', 'translate(20, ' + (this.height * 0.60 + this.margin.bottom) + ') ' +
@@ -75,7 +94,7 @@ class AggregateIncomeBarPlot {
             .domain(['Temp1', 'Temp2'])
             .range([0, this.width]);
         this.yScale = d3.scaleLinear()
-            .domain([0, 1600])
+            .domain([0, 5000])
             .range([this.height, 0])
             .nice();
 
@@ -97,6 +116,8 @@ class AggregateIncomeBarPlot {
     }
 
     updatePlot() {
+        let year = document.getElementById("slider").value;
+        this.header.text(`Income Shares ${year}`);
         let that = this;
         let checked = document.querySelectorAll('input.sub-button:checked');
 
@@ -107,8 +128,10 @@ class AggregateIncomeBarPlot {
             let arr = elem.id.split('-');
             bands.push(`${arr[0].toUpperCase()} ${arr[1].toUpperCase()}`);
             
+            let idx = 2017 - year;
             let d = {};
-            d.value = this.reducedData[arr[0]][arr[1]];
+            d.value =  idx < this.reducedData[arr[0]].length ? 
+                    this.reducedData[arr[0]][idx][arr[1]] : 0;
             d.category = arr[0];
             d.pentile = arr[1];
             nextData.push(d);

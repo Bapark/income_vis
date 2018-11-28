@@ -18,7 +18,16 @@
 <h1>Income Inequality in the United States</h1>
 
 
-<div id="cartogram" class="view">
+<div id="income-presentation" class="view">
+    <div id="income-presentation-title-div">
+        <h3 id='income-presentation-title' class='presentation-title'>Text</h3>
+    </div>
+    <div id="income-presentation-buttons-div">
+        <button class='reverse-button' type='button' id='income-presentation-reverse-button'>&lt--</button>
+        <button class='forward-button' type='button' id='income-presentation-forward-button'>--&gt</button>
+    </div>
+    <div id='income-presentation-text-div'>
+    </div>
 </div>
 
 <div id ="incomeLineChart" class = "wrapper">
@@ -75,7 +84,7 @@
         </div>
         <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
         <div id="aggregateBarsDiv" class = "view">
-            <h2>Aggregated Income Shares</h2>
+            <h2 id="aggregateHeader">Income Shares</h2>
         </div>
         <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
     </div>
@@ -87,13 +96,14 @@
 
 <div id = "yearslider" class = "">
      <input type="range" id="slider" name="Year"
-         min="1916" value = "2012" max="2012" step = "1">
+         min="1916" value = "2012" max="2017" step = "1">
 </div>
 
 <!--Add scripts for interactivity-->
 <script type="application/javascript" src="script/wealthchart.js"></script>
 <script type="application/javascript" src="script/incomechart.js"></script>
 <script type="application/javascript" src="script/aggregatechart.js"></script>
+<script type="application/javascript" src="script/presentation.js"></script>
 <script type="application/javascript" src="script/init.js"></script>
 
 

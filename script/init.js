@@ -1,4 +1,8 @@
-
+if(!Array.prototype.last){
+	Array.prototype.last = function(){
+		return this[this.length - 1];
+	}
+}
 
 d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
     //console.log(incomedata);
@@ -98,6 +102,34 @@ async function loadData(){
 	let wealthData = await d3.csv('data/wealthdata.csv', wealthFormater);
 	console.log(wealthData);
 	wealthChart = new WealthChart(wealthData);
+
+	let yearSlider = d3.select('#slider');
+	yearSlider.on('input', function() {
+		aggregateIncomeBarPlot.updatePlot();
+		wealthChart.updateChart();
+	});
+
+	let incomeCards = await d3.json('data/incomecards.json');
+	let incomePresentationSideEffect = function (idx) {
+		//Update Selections
+		let topButtons = document.getElementsByClassName('top-level-button');
+		for(let i = 0; i < topButtons.length; i++){
+			topButtons[i].checked = true;
+			topButtons[i].click();
+		}
+		incomeCards.cards[idx].buttons.forEach((elem) => {
+			document.getElementById(elem)
+				.click();
+		});
+	}
+	let incomePresentation = new Presentation(incomeCards.cards, 
+								'#income-presentation-title', 
+								'#income-presentation-text-div',
+								incomePresentationSideEffect);
+	d3.select('#income-presentation-forward-button')
+		.on('click', () => incomePresentation.moveNext());
+	d3.select('#income-presentation-reverse-button')
+		.on('click', () => incomePresentation.movePrevious());
 
 }
 
