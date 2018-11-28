@@ -10,94 +10,107 @@
     <script src="https://d3js.org/d3-queue.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
  <!-- add fonts here if we want spicier fonts-->
 </head>
 
 <body>
+    <div class = 'row mainCol'>
+        <div class='col-xs-12'>
+            <div class='buffer-top row title'>
+                <h1 class='col-xs-12'>Income Inequality in the United States</h1>
+            </div>
 
-<h1>Income Inequality in the United States</h1>
+                <div id="income-presentation" class="buffer-top row title">
+                    <div id="income-presentation-title-div" class="col-xs-12">
+                        <h3 id='income-presentation-title' class='presentation-title'>Text</h3>
+                    </div>
+                </div>
+                <div  class="row title">
+                        <div id="income-presentation-buttons-div" class="col-xs-12 title">
+                            <div class='row title'>
+                                <button class='reverse-button' type='button' id='income-presentation-reverse-button'>&lt--</button>
+                                <button class='forward-button' type='button' id='income-presentation-forward-button'>--&gt</button>
+                            </div>
+                        </div>
+                    <div class='row title'>
+                        <div id='income-presentation-text-div' class="col-xs-12 textWrapper"></div>
+                    </div>
+                </div>
 
+            <div id ="incomeLineChart" class = "wrapper">
+                <div id="radioSelectors" class = "inline">
+                    <div id='overall-button-group' class='button-group'>
+                        <input type='checkbox' class='top-level-button overall' id="overall-top" checked> Overall</br>
+                        <input type='checkbox' class='sub-button overall' id='overall-top5' checked> Top 5%</br>
+                        <input type='checkbox' class='sub-button overall' id='overall-highest' checked> Highest*</br>
+                        <input type='checkbox' class='sub-button overall' id='overall-fourth' checked> Fourth</br>
+                        <input type='checkbox' class='sub-button overall' id='overall-third' checked> Third</br>
+                        <input type='checkbox' class='sub-button overall' id='overall-second' checked> Second</br>
+                        <input type='checkbox' class='sub-button overall' id='overall-lowest' checked> Lowest</br>
+                    </div>
+                    <div id='asian-button-group' class='button-group'>
+                        <input type='checkbox' class='top-level-button asian' id="asian-top" >Asian</br>
+                        <input type='checkbox' class='sub-button asian' id='asian-top5'> Top 5%</br>
+                        <input type='checkbox' class='sub-button asian' id='asian-highest'> Highest*</br>
+                        <input type='checkbox' class='sub-button asian' id='asian-fourth'> Fourth</br>
+                        <input type='checkbox' class='sub-button asian' id='asian-third'> Third</br>
+                        <input type='checkbox' class='sub-button asian' id='asian-second'> Second</br>
+                        <input type='checkbox' class='sub-button asian' id='asian-lowest'> Lowest</br>
+                    </div>
+                    <div id='black-button-group' class='button-group'>
+                        <input type='checkbox' class='top-level-button black'id="black-top" > Black</br>
+                        <input type='checkbox' class='sub-button black' id='black-top5'> Top 5%</br>
+                        <input type='checkbox' class='sub-button black' id='black-highest'> Highest*</br>
+                        <input type='checkbox' class='sub-button black' id='black-fourth'> Fourth</br>
+                        <input type='checkbox' class='sub-button black' id='black-third'> Third</br>
+                        <input type='checkbox' class='sub-button black' id='black-second'> Second</br>
+                        <input type='checkbox' class='sub-button black' id='black-lowest'> Lowest</br>
+                    </div>
+                    <div id='hispanic-button-group' class='button-group'>
+                        <input type='checkbox' class='top-level-button hispanic'id="hispanic-top" > Hispanic</br>
+                        <input type='checkbox' class='sub-button hispanic' id='hispanic-top5'> Top 5%</br>
+                        <input type='checkbox' class='sub-button hispanic' id='hispanic-highest'> Highest*</br>
+                        <input type='checkbox' class='sub-button hispanic' id='hispanic-fourth'> Fourth</br>
+                        <input type='checkbox' class='sub-button hispanic' id='hispanic-third'> Third</br>
+                        <input type='checkbox' class='sub-button hispanic' id='hispanic-second'> Second</br>
+                        <input type='checkbox' class='sub-button hispanic' id='hispanic-lowest'> Lowest</br>
+                    </div>
+                    <div id='white-button-group' class='button-group'>
+                        <input type='checkbox' class='top-level-button white'id="white-top" > White</br>
+                        <input type='checkbox' class='sub-button white' id='white-top5'> Top 5%</br>
+                        <input type='checkbox' class='sub-button white' id='white-highest'> Highest*</br>
+                        <input type='checkbox' class='sub-button white' id='white-fourth'> Fourth</br>
+                        <input type='checkbox' class='sub-button white' id='white-third'> Third</br>
+                        <input type='checkbox' class='sub-button white' id='white-second'> Second</br>
+                        <input type='checkbox' class='sub-button white' id='white-lowest'> Lowest</br>
+                    </div>
+                </div>
+                <div class = 'inline inner-wrapper'>
+                    <div id="incomeLineDiv" class = "view">
+                        <h2>Income By the Years</h2>
+                    </div>
+                    <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
+                    <div id="aggregateBarsDiv" class = "view">
+                        <h2 id="aggregateHeader">Income Shares</h2>
+                    </div>
+                    <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
+                </div>
+            </div>
 
-<div id="income-presentation" class="view">
-    <div id="income-presentation-title-div">
-        <h3 id='income-presentation-title' class='presentation-title'>Text</h3>
+            <div id="wealthChart">
+                
+            </div>
+
+            <div id = "yearslider" class = "">
+                 <input type="range" id="slider" name="Year"
+                     min="1916" value = "2012" max="2017" step = "1">
+            </div>
+         </div>
     </div>
-    <div id="income-presentation-buttons-div">
-        <button class='reverse-button' type='button' id='income-presentation-reverse-button'>&lt--</button>
-        <button class='forward-button' type='button' id='income-presentation-forward-button'>--&gt</button>
-    </div>
-    <div id='income-presentation-text-div'>
-    </div>
-</div>
-
-<div id ="incomeLineChart" class = "wrapper">
-    <div id="radioSelectors" class = "inline">
-        <div id='overall-button-group' class='button-group'>
-            <input type='checkbox' class='top-level-button overall' id="overall-top" checked> Overall</br>
-            <input type='checkbox' class='sub-button overall' id='overall-top5' checked> Top 5%</br>
-            <input type='checkbox' class='sub-button overall' id='overall-highest' checked> Highest*</br>
-            <input type='checkbox' class='sub-button overall' id='overall-fourth' checked> Fourth</br>
-            <input type='checkbox' class='sub-button overall' id='overall-third' checked> Third</br>
-            <input type='checkbox' class='sub-button overall' id='overall-second' checked> Second</br>
-            <input type='checkbox' class='sub-button overall' id='overall-lowest' checked> Lowest</br>
-        </div>
-        <div id='asian-button-group' class='button-group'>
-            <input type='checkbox' class='top-level-button asian' id="asian-top" >Asian</br>
-            <input type='checkbox' class='sub-button asian' id='asian-top5'> Top 5%</br>
-            <input type='checkbox' class='sub-button asian' id='asian-highest'> Highest*</br>
-            <input type='checkbox' class='sub-button asian' id='asian-fourth'> Fourth</br>
-            <input type='checkbox' class='sub-button asian' id='asian-third'> Third</br>
-            <input type='checkbox' class='sub-button asian' id='asian-second'> Second</br>
-            <input type='checkbox' class='sub-button asian' id='asian-lowest'> Lowest</br>
-        </div>
-        <div id='black-button-group' class='button-group'>
-            <input type='checkbox' class='top-level-button black'id="black-top" > Black</br>
-            <input type='checkbox' class='sub-button black' id='black-top5'> Top 5%</br>
-            <input type='checkbox' class='sub-button black' id='black-highest'> Highest*</br>
-            <input type='checkbox' class='sub-button black' id='black-fourth'> Fourth</br>
-            <input type='checkbox' class='sub-button black' id='black-third'> Third</br>
-            <input type='checkbox' class='sub-button black' id='black-second'> Second</br>
-            <input type='checkbox' class='sub-button black' id='black-lowest'> Lowest</br>
-        </div>
-        <div id='hispanic-button-group' class='button-group'>
-            <input type='checkbox' class='top-level-button hispanic'id="hispanic-top" > Hispanic</br>
-            <input type='checkbox' class='sub-button hispanic' id='hispanic-top5'> Top 5%</br>
-            <input type='checkbox' class='sub-button hispanic' id='hispanic-highest'> Highest*</br>
-            <input type='checkbox' class='sub-button hispanic' id='hispanic-fourth'> Fourth</br>
-            <input type='checkbox' class='sub-button hispanic' id='hispanic-third'> Third</br>
-            <input type='checkbox' class='sub-button hispanic' id='hispanic-second'> Second</br>
-            <input type='checkbox' class='sub-button hispanic' id='hispanic-lowest'> Lowest</br>
-        </div>
-        <div id='white-button-group' class='button-group'>
-            <input type='checkbox' class='top-level-button white'id="white-top" > White</br>
-            <input type='checkbox' class='sub-button white' id='white-top5'> Top 5%</br>
-            <input type='checkbox' class='sub-button white' id='white-highest'> Highest*</br>
-            <input type='checkbox' class='sub-button white' id='white-fourth'> Fourth</br>
-            <input type='checkbox' class='sub-button white' id='white-third'> Third</br>
-            <input type='checkbox' class='sub-button white' id='white-second'> Second</br>
-            <input type='checkbox' class='sub-button white' id='white-lowest'> Lowest</br>
-        </div>
-    </div>
-    <div class = 'inline inner-wrapper'>
-        <div id="incomeLineDiv" class = "view">
-            <h2>Income By the Years</h2>
-        </div>
-        <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
-        <div id="aggregateBarsDiv" class = "view">
-            <h2 id="aggregateHeader">Income Shares</h2>
-        </div>
-        <p class='footnote'>*Hightest contains the 80th-94th percentiles</p>
-    </div>
-</div>
-
-<div id="wealthChart">
-    
-</div>
-
-<div id = "yearslider" class = "">
-     <input type="range" id="slider" name="Year"
-         min="1916" value = "2012" max="2017" step = "1">
-</div>
 
 <!--Add scripts for interactivity-->
 <script type="application/javascript" src="script/wealthchart.js"></script>
