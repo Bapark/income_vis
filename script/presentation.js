@@ -30,10 +30,11 @@ class Presentation {
      */
     constructor(cards, titleId, textId, sideEffects){
         this.cards = cards;
-        this.current = 0;
+        this.current = -1;
         this.titleId = titleId;
         this.textId = textId;
         this.sideEffects = sideEffects;
+        this.moveNext();
     }
 
     moveNext() {
