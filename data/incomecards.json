@@ -38,6 +38,76 @@
             "title" : "The Absolute Income Gap",
             "text" : ["The absolute wealth gap is the difference in median income between the Top 5% and the lowest 20% of earners. It was at its lowest in 1968 at $165,054. In 2017 that gap was at $372031, a 125% increase.", "For every $10,000 of income generated a median Top 5% earner would take home $4,500 while a median earner in the lowest 20% would barely see $100."],
             "buttons" : ["overall-top5", "overall-lowest"]
+        },
+        {
+            "title" : "Race and Income - Above the Line",
+            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile."],
+            "buttons" : ["overall-top5", "white-top5", "asian-top5"]
+        },
+        {
+            "title" : "Race and Income - Above the Line",
+            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile."],
+            "buttons" : ["overall-highest", "white-highest", "asian-highest"]
+        },
+        {
+            "title" : "Race and Income - Above the Line",
+            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile."],
+            "buttons" : ["overall-fourth", "white-fourth", "asian-fourth"]
+        },
+        {
+            "title" : "Race and Income - Above the Line",
+            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile.",
+            "As income levels drop, the relative gap gets wider."],
+            "buttons" : ["overall-third", "white-third", "asian-third"]
+        },
+        {
+            "title" : "Race and Income - Above the Line",
+            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile.",
+            "As income levels drop, the relative gap gets wider."],
+            "buttons" : ["overall-second", "white-second", "asian-second"]
+        },
+        {
+            "title" : "Race and Income - Above the Line",
+            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile.", "2003 is the only year that Asian earners earned less than the overall group."],
+            "buttons" : ["overall-lowest", "white-lowest", "asian-lowest"]
+        },
+        {
+            "title" : "Race and Income - Below the Line",
+            "text" : ["At virtually every income level black and Asian earners earned above the overall average for their pentile."],
+            "buttons" : ["overall-top5", "black-top5", "hispanic-top5"]
+        },
+        {
+            "title" : "Race and Income - Below the Line",
+            "text" : ["While the Asian and White demographics always had a median income above the overall average for each pentile, Black and Hispanic earners earn less than the average for their pentile."],
+            "buttons" : ["overall-highest", "black-highest", "hispanic-highest"]
+        },
+        {
+            "title" : "Race and Income - Below the Line",
+            "text" : ["While the Asian and White demographics always had a median income above the overall average for each pentile, Black and Hispanic earners earn less than the average for their pentile."],
+            "buttons" : ["overall-fourth", "black-fourth", "hispanic-fourth"]
+        },
+        {
+            "title" : "Race and Income - Below the Line",
+            "text" : ["While the Asian and White demographics always had a median income above the overall average for each pentile, Black and Hispanic earners earn less than the average for their pentile.",
+            "As income levels drop, the relative gap gets wider."],
+            "buttons" : ["overall-third", "black-third", "hispanic-third"]
+        },
+        {
+            "title" : "Race and Income - Below the Line",
+            "text" : ["At virtually every income level black and hispanic earners earned above the overall average for their pentile.",
+            "As income levels drop, the relative gap gets wider."],
+            "buttons" : ["overall-second", "black-second", "hispanic-second"]
+        },
+        {
+            "title" : "Race and Income - Below the Line",
+            "text" : ["At virtually every income level black and hispanic earners earned above the overall average for their pentile.", "As income levels drop, the relative gap gets wider."],
+            "buttons" : ["overall-lowest", "black-lowest", "hispanic-lowest"]
+        },
+        {
+            "title" : "Exploration",
+            "text" : ["Feel free to use the buttons on the left and the time series slider to explore the data yourself. What interesting trends can you find? You can quickly select or deselect an entire demographic by clicking the top level button for that demographic. You can then refine your query as you see fit by selecting any sub-buttons."],
+            "buttons" : ["overall-top"]
         }
+
     ]
 }
