@@ -116,3 +116,7 @@ div.hidden {
     
     margin-top:50px;
 }
+
+.brush .selection {
+    fill-opacity: .5;
+}
