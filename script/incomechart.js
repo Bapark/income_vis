@@ -55,8 +55,22 @@ class IncomeTimePlot {
                             .attr('id', 'legend-group')
                             .attr('transform', `translate(${this.margin.left + this.width - 15}, 5)`);
 
-        this.updatePlot();
+        //create the brush
+        this.brush = d3.brush()
+                .extent([[0, 0], [this.xScale(2017) + 2, this.height]]);
+        this.svg.append('g')
+            .attr('id', 'income-chart-brush')
+            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+            .attr('class', 'brush')
+            .call(this.brush);
 
+            
+        //Create the group to display wealth gap
+        this.wealthGroup = this.svg.append('g')
+            .attr('id', 'income-chart-wealth-gap-data')
+            .attr('transform', `translate(${this.margin.left + 15}, ${this.margin.top + 60})`);
+        
+        this.updatePlot();
     }
 
     updatePlot() {
@@ -106,7 +120,7 @@ class IncomeTimePlot {
         paths = paths.merge(pathsEnter);
 
         let lineFn = d3.line()
-                        .x((d) => that.xScale(new Date(d.year, 0, 1, 0)) + that.margin.left)
+                        .x((d) => that.xScale(d.year) + that.margin.left)
                         .y((d) => that.yScale(d.value) + that.margin.top)
                         .curve(d3.curveStep);
         paths.attr('d', (d) => lineFn(d.data))
@@ -150,7 +164,7 @@ class IncomeTimePlot {
                 .classed('hidden', !val);
                 if(val) {
                     let coordinates = d3.mouse(this);
-                    let year = that.xScale.invert(coordinates[0] - that.margin.left).getFullYear();
+                    let year = Math.floor(that.xScale.invert(coordinates[0] - that.margin.left));
                     let medianIncome = Math.floor(that.yScale.invert(coordinates[1] - that.margin.top));
                     that.div.html(`<p class='tooltip-text'>${d.category.toUpperCase()} ${d.pentile.toUpperCase()} <br> Year : ${year} <br> Median Income ${medianIncome}`)	
                         .style("left", (d3.event.pageX) + "px")		
@@ -165,11 +179,89 @@ class IncomeTimePlot {
             .on('mouseleave', setTooltip(false));
         this.legendGroup.attr('transform', `translate(${this.margin.left + this.width - 15}, ${this.height/2 - 7.5 * nextData.length})`);
 
+        //update brush callback
+        this.brush
+            .on('end', () => {
+                if(d3.event.selection && nextData.length > 1) {
+                    let startYear = Math.ceil(that.xScale.invert(d3.event.selection[0][0]));
+                    let endYear = Math.floor(that.xScale.invert(d3.event.selection[1][0]));
+                    let maxY = Math.ceil(that.yScale.invert(d3.event.selection[0][1]));
+                    let minY = Math.floor(that.yScale.invert(d3.event.selection[1][1]));
+
+                    //Order if necessary
+                    if(startYear > endYear) {
+                        let tmp = startYear;
+                        startYear = endYear;
+                        endYear = tmp;
+                    }
+                    if(minY > maxY) {
+                        let tmp = minY;
+                        minY = maxY
+                        maxY = tmp;
+                    }
+
+                    //Get all intersecting lines
+                    let idx = 2017 - startYear;
+                    let intersections = [];
+                    for(let i = 0; i < nextData.length; i++) {
+                        if(idx < nextData[i].data.length && idx >= 0) {
+                            if(nextData[i].data[idx].value <= maxY && nextData[i].data[idx].value >= minY) {
+                                intersections.push(nextData[i]);
+                            }
+                        }
+                    }
+                    if(intersections.length < 2) {
+                        return;
+                    }
+                    //Find the min and max lines
+                    let minLine = intersections[0];
+                    let maxLine = intersections[0];
+                    for(let i = 1; i < intersections.length; i++) {
+                        let minLineVal = minLine.data[idx].value;
+                        let maxLineVal = maxLine.data[idx].value;
+                        let currVal = intersections[i].data[idx].value;
+
+                        if(currVal < minLineVal) {
+                            minLine = intersections[i];
+                        }
+
+                        if(currVal > maxLineVal) {
+                            maxLine = intersections[i];
+                        }
+                    }
+
+                    let totalWealthGap = 0;
+                    let end = 2017 - endYear;
+                    end = end > 0 ? end : 0;
+                    for(let i = idx; i >= end; i--) {
+                        totalWealthGap += maxLine.data[i].value - minLine.data[i].value;
+                    }
+
+                    let wealthGapData = ["Total Wealth Gap Between", 
+                                        `${maxLine.category.capFirst()} ${maxLine.pentile.capFirst()} \
+                                         and ${minLine.category.capFirst()} ${minLine.pentile.capFirst()}`,
+                                        `${startYear} - ${endYear}`,
+                                        `${d3.format("($,.2f")(totalWealthGap)}`];
+
+                    let wealthText = that.wealthGroup.selectAll('text')
+                        .data(wealthGapData);
+                    let wealthTextEnter = wealthText.enter().append('text');
+                    wealthText.exit().remove();
+                    wealthText = wealthText.merge(wealthTextEnter);
+
+                    wealthText.attr('class', 'legend-text')
+                        .attr('y', (d, i) => i * 20)
+                        .text(d => d);
+                } else {
+                    this.wealthGroup.selectAll('*').remove();
+                }
+            });
+
     }
 
     setupScales(minX, maxX, minY, maxY) {
-        this.xScale = d3.scaleTime()
-            .domain([new Date(minX, 0, 1, 0), new Date(maxX, 0, 1, 0)])
+        this.xScale = d3.scaleLinear()
+            .domain([minX, maxX])
             .range([0, this.width])
             .nice();
         this.yScale = d3.scaleLinear()
@@ -179,7 +271,8 @@ class IncomeTimePlot {
 
         this.xAxis = d3.axisBottom();
         this.yAxis = d3.axisLeft();
-        this.xAxis.scale(this.xScale);
+        this.xAxis.scale(this.xScale)
+            .tickFormat(d3.format(""));
         this.yAxis.scale(this.yScale)
                 .ticks(10);
         d3.select('#x-axis-incomechart').call(this.xAxis);

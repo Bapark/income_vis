@@ -19,8 +19,7 @@ h2 {
 }
 
 .inner-wrapper{
-    margin-left: 20px;
-    padding-left: 60px;
+    margin-left:40px;
 }
 
 .footnote{
@@ -65,7 +64,7 @@ h2 {
 .text{
     color:lightgray;
 }
-.text.legend-text {
+text.legend-text {
     font-size : 12px;
 }
 
@@ -115,4 +114,11 @@ div.hidden {
 #yearWrapper{
     
     margin-top:50px;
+}
+
+.brush .selection {
+    fill-opacity: .5;
+}
+#incomeSlider{
+    width: 500px;
 }

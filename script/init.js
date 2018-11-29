@@ -4,6 +4,13 @@ if(!Array.prototype.last){
 	}
 }
 
+if(!String.prototype.capFirst) {
+	String.prototype.capFirst = function() {
+		if(this.lenght == 0) return this;
+		return this.charAt(0).toUpperCase() + this.slice(1);
+	}
+}
+
 d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
     //console.log(incomedata);
    
@@ -132,8 +139,11 @@ async function loadData(){
 	wealthChart = new WealthChart(wealthData);
 
 	let yearSlider = d3.select('#slider');
-	yearSlider.on('input', function() {
+	let incomeSlider = d3.select('#incomeSlider');
+	incomeSlider.on('input', function(){
 		aggregateIncomeBarPlot.updatePlot();
+	});
+	yearSlider.on('input', function() {		
 		wealthChart.updateChart();
 	});
 	yearSlider.attr('style', 'width: 25%;');
