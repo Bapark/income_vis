@@ -13,11 +13,14 @@ class IncomeTimePlot {
         this.drawPlot();
     }
 
-    drawPlot() { 
+    drawPlot() {
         this.svg = d3.select('#incomeLineDiv')
             .append('svg')
             .attr('width', this.width + this.margin.left + this.margin.right)
             .attr('height', this.height + this.margin.top + this.margin.bottom);
+        this.div = d3.select('body')
+            .append('div')
+            .attr('class', 'tooltip hidden');
 
         let svgGroup = this.svg.append('g').classed('wrapper-group', true);
 
@@ -141,10 +144,25 @@ class IncomeTimePlot {
                 .classed('highlighted', val);
             }
         }
+        let setTooltip = function(val) {
+            return function(d) {		
+                that.div	
+                .classed('hidden', !val);
+                if(val) {
+                    let coordinates = d3.mouse(this);
+                    let year = that.xScale.invert(coordinates[0] - that.margin.left).getFullYear();
+                    let medianIncome = Math.floor(that.yScale.invert(coordinates[1] - that.margin.top));
+                    that.div.html(`<p class='tooltip-text'>${d.category.toUpperCase()} ${d.pentile.toUpperCase()} <br> Year : ${year} <br> Median Income ${medianIncome}`)	
+                        .style("left", (d3.event.pageX) + "px")		
+                        .style("top", (d3.event.pageY - 28) + "px");	
+                }
+                setHighlight(val)(d);
+            }
+        }
         legendGroups.on('mouseenter', setHighlight(true))
             .on('mouseleave', setHighlight(false));
-        paths.on('mouseenter', setHighlight(true))
-            .on('mouseleave', setHighlight(false));
+        paths.on('mouseenter', setTooltip(true))
+            .on('mouseleave', setTooltip(false));
         this.legendGroup.attr('transform', `translate(${this.margin.left + this.width - 15}, ${this.height/2 - 7.5 * nextData.length})`);
 
     }
