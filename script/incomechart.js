@@ -3,9 +3,9 @@
  */
 class IncomeTimePlot {
     constructor(data, colorScales) {
-        this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
-        this.width = 875 - this.margin.left - this.margin.right;
-        this.height = 500 - this.margin.top - this.margin.bottom;
+        this.margin = { top: 20, right: 120, bottom: 60, left: 80 };
+        this.width = 950 - this.margin.left - this.margin.right;
+        this.height = 550 - this.margin.top - this.margin.bottom;
         this.data = data;
 
         this.colorScales = colorScales;
@@ -48,7 +48,9 @@ class IncomeTimePlot {
         this.lineGroup = this.svg.append('g')
                     .attr('id', 'line-group-incomechart');
 
-
+        this.legendGroup = this.svg.append('g')
+                            .attr('id', 'legend-group')
+                            .attr('transform', `translate(${this.margin.left + this.width - 15}, 5)`);
 
         this.updatePlot();
 
@@ -109,6 +111,28 @@ class IncomeTimePlot {
                 return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
             .attr('stroke-width', 2)
             .attr('fill', 'none');
+
+        //construct the legend
+        let legendGroups = this.legendGroup.selectAll('g')
+            .data(nextData);
+        let legendGroupsEnter = legendGroups.enter().append('g');
+        legendGroups.exit().remove();
+        legendGroups = legendGroups.merge(legendGroupsEnter);
+        legendGroups.selectAll('*').remove();
+
+        legendGroups.append('circle')
+                .attr('r', 5)
+                .attr('fill', (d) => that.colorScales[d.category](that.colorScales[d.pentile]));
+        legendGroups.attr('transform', (d, i) => {
+            return `translate(5, ${i * 15 + 10})`;
+        });
+
+        legendGroups.append('text')
+            .attr('transform', 'translate(15, 5)')
+            .text(d => `${d.category.toUpperCase()} ${d.pentile.toUpperCase()}`)
+            .classed('text', true)
+            .classed('legend-text', true);
+
     }
 
     setupScales(minX, maxX, minY, maxY) {

@@ -64,7 +64,9 @@ h2 {
 }
 .text{
     color:lightgray;
-
+}
+.text.legend-text {
+    font-size : 12px;
 }
 
 text{
