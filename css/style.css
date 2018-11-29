@@ -64,7 +64,14 @@ h2 {
 }
 .text{
     color:lightgray;
+}
+.text.legend-text {
+    font-size : 12px;
+}
 
+.highlighted {
+    stroke-width : 3px;
+    stroke : lightgray;
 }
 
 text{
@@ -81,7 +88,25 @@ svg{
 p{
     text-align: center;
 }
-#yearslider{
+
+div.tooltip {
+    position: absolute;			
+    text-align: center;			
+    width: 120px;					
+    height: 40px;					
+    padding: 2px;				
+    font: 10px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;
+    opacity : .9;
+}
+
+div.hidden {
+    display : none;
+}
+#yearslider {
     margin-top: 20px;
 }
 #aggregateBarsDiv{
