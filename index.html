@@ -31,7 +31,11 @@
                     </div>
                 </div>
                 <div  class="row title">
-                        <div id="income-presentation-buttons-div" class="col-xs-12 title">
+                       
+                    <div class='row title text'>
+                        <div id='income-presentation-text-div' class="col-xs-12 textWrapper"></div>
+                    </div>
+                     <div id="income-presentation-buttons-div" class="col-xs-12 title">
                             <div class='row title'>
                                 <button class='button-control' type='button' id='income-presentation-reverse-button'>
                                     <span class="fas fa-step-backward"></span>
@@ -41,9 +45,6 @@
                                 </button>
                             </div>
                         </div>
-                    <div class='row title text'>
-                        <div id='income-presentation-text-div' class="col-xs-12 textWrapper"></div>
-                    </div>
                 </div>
 
             <div id ="incomeLineChart" class = "row title wrapper">
@@ -103,7 +104,7 @@
                         </div>
                     </div>
                 </div>
-                        <div id="aggregateBarsDiv" class = " col-12 view">
+                        <div id="aggregateBarsDiv" class = "col-12 view">
                             <h2 id="aggregateHeader">Income Shares</h2>
                         </div>
                         <p class=' col-12 footnote'>*Hightest contains the 80th-94th percentiles</p>
@@ -112,14 +113,25 @@
 
             </div>
 
+            <div id='yearWrapper' class='row title text'>
+                <div class='col-12'>
+                    <div class='row title'>
+                        <h1 id='wealthTitle' >Historical Wealth Distribution</h1>
+                    </div>
+                    <div class='row title'>
+                        <h2 id='wealthYear' class=''>Year</h2>
+                    </div>
+                </div>
+            </div>
+            <div id = "yearslider" class = "row title">
+                 <input type="range" id="slider"  name="Year"
+                     min="1916" value = "2012" max="2012" step = "1">
+            </div>
             <div id="wealthChart">
                 
             </div>
 
-            <div id = "yearslider" class = "">
-                 <input type="range" id="slider" name="Year"
-                     min="1916" value = "2012" max="2012" step = "1">
-            </div>
+            
          </div>
     </div>
 

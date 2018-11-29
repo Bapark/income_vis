@@ -136,6 +136,7 @@ async function loadData(){
 		aggregateIncomeBarPlot.updatePlot();
 		wealthChart.updateChart();
 	});
+	yearSlider.attr('style', 'width: 25%;');
 
 	let incomeCards = await d3.json('data/incomecards.json');
 	let incomePresentationSideEffect = function (idx) {
