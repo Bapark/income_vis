@@ -19,8 +19,7 @@ h2 {
 }
 
 .inner-wrapper{
-    margin-left: 20px;
-    padding-left: 60px;
+    margin-left:40px;
 }
 
 .footnote{
@@ -119,4 +118,7 @@ div.hidden {
 
 .brush .selection {
     fill-opacity: .5;
+}
+#incomeSlider{
+    width: 500px;
 }

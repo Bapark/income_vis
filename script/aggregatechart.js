@@ -99,7 +99,7 @@ class AggregateIncomeBarPlot {
     }
 
     updatePlot() {
-        let year = document.getElementById("slider").value;
+        let year = document.getElementById("incomeSlider").value;
         this.header.text(`Income Shares ${year}`);
         let that = this;
         let checked = document.querySelectorAll('input.sub-button:checked');
