@@ -21,7 +21,7 @@ class WealthChart {
 
 		
 		let sliderVal = document.getElementById("slider").value;
-
+		d3.select('#wealthYear').text(sliderVal);
 		let defData = this.wealthData.filter( (d)=>{return d.year == sliderVal});
 
 		let dataArray = [
@@ -75,6 +75,7 @@ class WealthChart {
 */
 		let that = this;
 		let sliderVal = document.getElementById("slider").value;
+		d3.select('#wealthYear').text(sliderVal);
 		let defData = that.wealthData.filter( (d)=>{
 			return d.year == sliderVal
 		});
