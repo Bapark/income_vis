@@ -14,9 +14,37 @@ d3.csv("data/highest_marginal_income_taxrates.csv").then(incomedata => {
    
 });
 
+function createColorScales() {
+	let colorScales = {};
+	colorScales.overall = d3.scaleLinear().domain([1,6])
+		//.interpolate(d3.interpolateHcl)
+		.range([d3.rgb('#805e00'), d3.rgb('#ffe499')]);
+	colorScales.white = d3.scaleLinear().domain([1,6])
+		//.interpolate(d3.interpolateHcl)
+		.range([d3.rgb("#800f00"), d3.rgb('#ff7866')]);
+	colorScales.black = d3.scaleLinear().domain([1,6])
+		//.interpolate(d3.interpolateHcl)
+		.range([d3.rgb("#072592"), d3.rgb('#6d8bf8')]);
+	colorScales.asian = d3.scaleLinear().domain([1,6])
+		//.interpolate(d3.interpolateHcl)
+		.range([d3.rgb("#008000"), d3.rgb('#80ff80')]);
+	colorScales.hispanic = d3.scaleLinear().domain([1,6])
+		//.interpolate(d3.interpolateHcl)
+		.range([d3.rgb("#550080"), d3.rgb('#d580ff')]);
+
+	colorScales.top5 = 1;
+	colorScales.highest = 2;
+	colorScales.fourth = 3;
+	colorScales.third = 4;
+	colorScales.second = 5;
+	colorScales.lowest = 6;
+
+	return colorScales;
+}
+
 //setup racial data sets 
 async function loadData(){
-
+	let colorScales = createColorScales();
 	let medianIncomeData = {};
 	let incomeFormatter = function(data){
 		let val =  {
@@ -60,8 +88,8 @@ async function loadData(){
 	incomeShareData.white = await d3.csv('data/h02WNH.csv', aggregateFormater);
 
 	//globalscope
-	incomeTimePlot = new IncomeTimePlot(medianIncomeData);
-	aggregateIncomeBarPlot = new AggregateIncomeBarPlot(incomeShareData);
+	incomeTimePlot = new IncomeTimePlot(medianIncomeData, colorScales);
+	aggregateIncomeBarPlot = new AggregateIncomeBarPlot(incomeShareData, colorScales);
 	d3.selectAll('.sub-button').on('change', () => {
 		incomeTimePlot.updatePlot();
 		aggregateIncomeBarPlot.updatePlot();

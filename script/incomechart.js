@@ -2,36 +2,13 @@
  * Class for drawing line chart of income through the years
  */
 class IncomeTimePlot {
-    constructor(data) {
+    constructor(data, colorScales) {
         this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
         this.width = 875 - this.margin.left - this.margin.right;
         this.height = 500 - this.margin.top - this.margin.bottom;
         this.data = data;
 
-        this.colorScales = {};
-
-        this.colorScales.overall = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb('#000000'), d3.rgb('#d3d3d3')]);
-        this.colorScales.white = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#E51A00"), d3.rgb('#EECCC3')]);
-        this.colorScales.black = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#0B3AE5"), d3.rgb('#ACBBEC')]);
-        this.colorScales.asian = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#00A80F"), d3.rgb('#D4F4D2')]);
-        this.colorScales.hispanic = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#7000A8"), d3.rgb('#EFDBF5')]);
-
-        this.colorScales.top5 = 1;
-        this.colorScales.highest = 2;
-        this.colorScales.fourth = 3;
-        this.colorScales.third = 4;
-        this.colorScales.second = 5;
-        this.colorScales.lowest = 6;
+        this.colorScales = colorScales;
 
         this.drawPlot();
     }
