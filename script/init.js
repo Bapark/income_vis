@@ -132,8 +132,11 @@ async function loadData(){
 	wealthChart = new WealthChart(wealthData);
 
 	let yearSlider = d3.select('#slider');
-	yearSlider.on('input', function() {
+	let incomeSlider = d3.select('#incomeSlider');
+	incomeSlider.on('input', function(){
 		aggregateIncomeBarPlot.updatePlot();
+	});
+	yearSlider.on('input', function() {		
 		wealthChart.updateChart();
 	});
 	yearSlider.attr('style', 'width: 25%;');
