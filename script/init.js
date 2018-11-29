@@ -4,6 +4,13 @@ if(!Array.prototype.last){
 	}
 }
 
+if(!String.prototype.capFirst) {
+	String.prototype.capFirst = function() {
+		if(this.lenght == 0) return this;
+		return this.charAt(0).toUpperCase() + this.slice(1);
+	}
+}
+
 d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
     //console.log(incomedata);
    

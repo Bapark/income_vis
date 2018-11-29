@@ -57,15 +57,20 @@ class IncomeTimePlot {
 
         //create the brush
         this.brush = d3.brush()
-                .extent([[0, 0], [this.width, this.height]]);
+                .extent([[0, 0], [this.xScale(2017) + 2, this.height]]);
         this.svg.append('g')
             .attr('id', 'income-chart-brush')
             .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
             .attr('class', 'brush')
             .call(this.brush);
 
+            
+        //Create the group to display wealth gap
+        this.wealthGroup = this.svg.append('g')
+            .attr('id', 'income-chart-wealth-gap-data')
+            .attr('transform', `translate(${this.margin.left + 15}, ${this.margin.top + 60})`);
+        
         this.updatePlot();
-
     }
 
     updatePlot() {
@@ -177,7 +182,6 @@ class IncomeTimePlot {
         //update brush callback
         this.brush
             .on('end', () => {
-                console.log(d3.event.selection);
                 if(d3.event.selection && nextData.length > 1) {
                     let startYear = Math.ceil(that.xScale.invert(d3.event.selection[0][0]));
                     let endYear = Math.floor(that.xScale.invert(d3.event.selection[1][0]));
@@ -233,7 +237,23 @@ class IncomeTimePlot {
                         totalWealthGap += maxLine.data[i].value - minLine.data[i].value;
                     }
 
-                    console.log(totalWealthGap);
+                    let wealthGapData = ["Total Wealth Gap Between", 
+                                        `${maxLine.category.capFirst()} ${maxLine.pentile.capFirst()} \
+                                         and ${minLine.category.capFirst()} ${minLine.pentile.capFirst()}`,
+                                        `${startYear} - ${endYear}`,
+                                        `${d3.format("($,.2f")(totalWealthGap)}`];
+
+                    let wealthText = that.wealthGroup.selectAll('text')
+                        .data(wealthGapData);
+                    let wealthTextEnter = wealthText.enter().append('text');
+                    wealthText.exit().remove();
+                    wealthText = wealthText.merge(wealthTextEnter);
+
+                    wealthText.attr('class', 'legend-text')
+                        .attr('y', (d, i) => i * 20)
+                        .text(d => d);
+                } else {
+                    this.wealthGroup.selectAll('*').remove();
                 }
             });
 
