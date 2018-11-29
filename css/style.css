@@ -1,21 +1,17 @@
 .inline {
     display: inline-block;
 }
-
+.body{
+    background-color: #161616;
+}
 .view {
-    width: 875px;
-    /*margin: auto;*/
-    padding: 5px;
-    /*display: inline-block;*/
 
 }
 .sub-button {
     margin-left: 15px;
 }
 #radioSelectors{
-    margin-left: 60px;
-    margin-top: 200px;
-    float: left;
+
 }
 
 h2 {
@@ -31,4 +27,92 @@ h2 {
     font-size: 10px;
     font-style: italic;
     font-family: sans-serif;
+}
+.title{
+    justify-content:center;
+}
+.mainCol{
+    
+    justify-content:center;
+}
+.row{
+    margin-top: 10px;
+}
+.textWrapper{
+    justify-content:center;
+    width: 700px;
+    min-height: 152px;
+    text-align: center;
+}
+#income-presentation-buttons-div{
+    width: 100%;
+}
+
+.buffer-top{
+    margin-top: 50px;
+}
+.button-control {
+   border-style: solid;
+   border-width: 1px;
+   border-color: darkgray;
+   border-radius: 4px;
+   width: 60px;
+   height: 40px;
+}
+.btn{
+
+}
+.text{
+    color:lightgray;
+}
+.text.legend-text {
+    font-size : 12px;
+}
+
+.highlighted {
+    stroke-width : 3px;
+    stroke : lightgray;
+}
+
+text{
+    fill:lightgray;
+}
+.button-group{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+svg{
+    display: block;
+    margin: auto;
+}
+p{
+    text-align: center;
+}
+
+div.tooltip {
+    position: absolute;			
+    text-align: center;			
+    width: 120px;					
+    height: 40px;					
+    padding: 2px;				
+    font: 10px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;
+    opacity : .9;
+}
+
+div.hidden {
+    display : none;
+}
+#yearslider {
+    margin-top: 20px;
+}
+#aggregateBarsDiv{
+    margin-top: 40px;
+}
+#yearWrapper{
+    
+    margin-top:50px;
 }

@@ -2,45 +2,25 @@
  * Class for drawing line chart of income through the years
  */
 class IncomeTimePlot {
-    constructor(data) {
-        this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
-        this.width = 875 - this.margin.left - this.margin.right;
-        this.height = 500 - this.margin.top - this.margin.bottom;
+    constructor(data, colorScales) {
+        this.margin = { top: 20, right: 120, bottom: 60, left: 80 };
+        this.width = 950 - this.margin.left - this.margin.right;
+        this.height = 550 - this.margin.top - this.margin.bottom;
         this.data = data;
 
-        this.colorScales = {};
-
-        this.colorScales.overall = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb('#000000'), d3.rgb('#d3d3d3')]);
-        this.colorScales.white = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#E51A00"), d3.rgb('#EECCC3')]);
-        this.colorScales.black = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#0B3AE5"), d3.rgb('#ACBBEC')]);
-        this.colorScales.asian = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#00A80F"), d3.rgb('#D4F4D2')]);
-        this.colorScales.hispanic = d3.scaleLinear().domain([1,6])
-                                    //.interpolate(d3.interpolateHcl)
-                                    .range([d3.rgb("#7000A8"), d3.rgb('#EFDBF5')]);
-
-        this.colorScales.top5 = 1;
-        this.colorScales.highest = 2;
-        this.colorScales.fourth = 3;
-        this.colorScales.third = 4;
-        this.colorScales.second = 5;
-        this.colorScales.lowest = 6;
+        this.colorScales = colorScales;
 
         this.drawPlot();
     }
 
-    drawPlot() { 
+    drawPlot() {
         this.svg = d3.select('#incomeLineDiv')
             .append('svg')
             .attr('width', this.width + this.margin.left + this.margin.right)
             .attr('height', this.height + this.margin.top + this.margin.bottom);
+        this.div = d3.select('body')
+            .append('div')
+            .attr('class', 'tooltip hidden');
 
         let svgGroup = this.svg.append('g').classed('wrapper-group', true);
 
@@ -57,6 +37,7 @@ class IncomeTimePlot {
             .text('year'.toUpperCase())
             .attr('id', 'x-axis-label-incomechart')
             .classed('axis-label', true)
+            .classed('text', true)
             .attr('transform', 'translate(' + (this.width/2 + this.margin.left) + ', ' + (this.height + this.margin.bottom) + ')');
         svgGroup.append('text')
             .text('USD (2017)'.toUpperCase())
@@ -65,27 +46,14 @@ class IncomeTimePlot {
             .attr('transform', 'translate(20, ' + (this.height/2 + this.margin.bottom) + ') ' +
                                'rotate(-90)');
         
-        this.xScale = d3.scaleTime()
-            .domain([new Date(1967, 0, 1, 0), new Date(2018, 0, 1, 0)])
-            .range([0, this.width])
-            .nice();
-        this.yScale = d3.scaleLinear()
-            .domain([0, 550000])
-            .range([this.height, 0])
-            .nice();
-
-        let xAxis = d3.axisBottom();
-        let yAxis = d3.axisLeft();
-        xAxis.scale(this.xScale);
-        yAxis.scale(this.yScale)
-            .ticks(10);
-        d3.select('#x-axis-incomechart').call(xAxis);
-        d3.select('#y-axis-incomechart').call(yAxis);
+        this.setupScales(1967, 2017, 0, 500000);
         
         this.lineGroup = this.svg.append('g')
                     .attr('id', 'line-group-incomechart');
 
-
+        this.legendGroup = this.svg.append('g')
+                            .attr('id', 'legend-group')
+                            .attr('transform', `translate(${this.margin.left + this.width - 15}, 5)`);
 
         this.updatePlot();
 
@@ -111,6 +79,25 @@ class IncomeTimePlot {
             d.pentile = arr[1];
             nextData.push(d);
         });
+
+        //Get min/max x and y values
+        let minX = d3.min(nextData, (d) => {
+            return d.data.last().year;
+        });
+        let minY = d3.min(nextData, (d) => {
+            return d3.min(d.data, (d) => {
+                return d.value;
+            });
+        });
+        let maxY = d3.max(nextData, (d) => {
+            return d3.max(d.data, (d) => {
+                return d.value;
+            });
+        });
+
+        //Set up new scales
+        this.setupScales(minX, 2017, minY, maxY);
+
         let paths = this.lineGroup.selectAll('path')
                             .data(nextData);
 
@@ -126,12 +113,76 @@ class IncomeTimePlot {
             .attr('stroke', (d) => {
                 return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
             .attr('stroke-width', 2)
-            .attr('fill', 'none');
+            .attr('fill', 'none')
+            .attr('id', (d) => `${d.category}-${d.pentile}-line`);
+
+        //construct the legend
+        let legendGroups = this.legendGroup.selectAll('g')
+            .data(nextData);
+        let legendGroupsEnter = legendGroups.enter().append('g');
+        legendGroups.exit().remove();
+        legendGroups = legendGroups.merge(legendGroupsEnter);
+        legendGroups.selectAll('*').remove();
+
+        legendGroups.append('circle')
+                .attr('r', 5)
+                .attr('fill', (d) => that.colorScales[d.category](that.colorScales[d.pentile]));
+        legendGroups.attr('transform', (d, i) => {
+            return `translate(5, ${i * 15 + 10})`;
+        });
+
+        legendGroups.append('text')
+            .attr('transform', 'translate(15, 5)')
+            .text(d => `${d.category.toUpperCase()} ${d.pentile.toUpperCase()}`)
+            .classed('text', true)
+            .classed('legend-text', true);
         
-       
+        //setup hovers
+        let setHighlight = function(val) {
+            return function(d) {
+                d3.select(`#${d.category}-${d.pentile}-line`)
+                .classed('highlighted', val);
+            }
+        }
+        let setTooltip = function(val) {
+            return function(d) {		
+                that.div	
+                .classed('hidden', !val);
+                if(val) {
+                    let coordinates = d3.mouse(this);
+                    let year = that.xScale.invert(coordinates[0] - that.margin.left).getFullYear();
+                    let medianIncome = Math.floor(that.yScale.invert(coordinates[1] - that.margin.top));
+                    that.div.html(`<p class='tooltip-text'>${d.category.toUpperCase()} ${d.pentile.toUpperCase()} <br> Year : ${year} <br> Median Income ${medianIncome}`)	
+                        .style("left", (d3.event.pageX) + "px")		
+                        .style("top", (d3.event.pageY - 28) + "px");	
+                }
+                setHighlight(val)(d);
+            }
+        }
+        legendGroups.on('mouseenter', setHighlight(true))
+            .on('mouseleave', setHighlight(false));
+        paths.on('mouseenter', setTooltip(true))
+            .on('mouseleave', setTooltip(false));
+        this.legendGroup.attr('transform', `translate(${this.margin.left + this.width - 15}, ${this.height/2 - 7.5 * nextData.length})`);
+
     }
 
-    drawPath(path, color) {
+    setupScales(minX, maxX, minY, maxY) {
+        this.xScale = d3.scaleTime()
+            .domain([new Date(minX, 0, 1, 0), new Date(maxX, 0, 1, 0)])
+            .range([0, this.width])
+            .nice();
+        this.yScale = d3.scaleLinear()
+            .domain([minY, maxY])
+            .range([this.height, 0])
+            .nice();
 
+        this.xAxis = d3.axisBottom();
+        this.yAxis = d3.axisLeft();
+        this.xAxis.scale(this.xScale);
+        this.yAxis.scale(this.yScale)
+                .ticks(10);
+        d3.select('#x-axis-incomechart').call(this.xAxis);
+        d3.select('#y-axis-incomechart').call(this.yAxis);
     }
 }
