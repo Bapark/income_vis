@@ -134,14 +134,17 @@ class IncomeTimePlot {
             .classed('text', true)
             .classed('legend-text', true);
         
-        legendGroups.on('mouseenter', d => {
-            d3.select(`#${d.category}-${d.pentile}-line`)
-                .classed('highlighted', true);
-        }).on('mouseleave', d => {
-            d3.select(`#${d.category}-${d.pentile}-line`)
-                .classed('highlighted', false);
-        });
-
+        //setup hovers
+        let setHighlight = function(val) {
+            return function(d) {
+                d3.select(`#${d.category}-${d.pentile}-line`)
+                .classed('highlighted', val);
+            }
+        }
+        legendGroups.on('mouseenter', setHighlight(true))
+            .on('mouseleave', setHighlight(false));
+        paths.on('mouseenter', setHighlight(true))
+            .on('mouseleave', setHighlight(false));
         this.legendGroup.attr('transform', `translate(${this.margin.left + this.width - 15}, ${this.height/2 - 7.5 * nextData.length})`);
 
     }
