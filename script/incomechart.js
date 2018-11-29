@@ -110,7 +110,8 @@ class IncomeTimePlot {
             .attr('stroke', (d) => {
                 return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
             .attr('stroke-width', 2)
-            .attr('fill', 'none');
+            .attr('fill', 'none')
+            .attr('id', (d) => `${d.category}-${d.pentile}-line`);
 
         //construct the legend
         let legendGroups = this.legendGroup.selectAll('g')
@@ -132,6 +133,16 @@ class IncomeTimePlot {
             .text(d => `${d.category.toUpperCase()} ${d.pentile.toUpperCase()}`)
             .classed('text', true)
             .classed('legend-text', true);
+        
+        legendGroups.on('mouseenter', d => {
+            d3.select(`#${d.category}-${d.pentile}-line`)
+                .classed('highlighted', true);
+        }).on('mouseleave', d => {
+            d3.select(`#${d.category}-${d.pentile}-line`)
+                .classed('highlighted', false);
+        });
+
+        this.legendGroup.attr('transform', `translate(${this.margin.left + this.width - 15}, ${this.height/2 - 7.5 * nextData.length})`);
 
     }
 
