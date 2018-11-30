@@ -72,12 +72,13 @@ class WealthChart {
         	})
         	.attr("dy", ".4em")
         	.attr("text-anchor", "middle")
-        	.text(d => d3.format(".0%")(d.data.percent/100))
-
         	.style({
         	    fill:'#fff',
-        	    'font-size':'10px'
-        	});
+        	    'font-size':'10px'})
+        	.attr( "fill-opacity", 0 ).transition().delay( 500 )
+           	.attr( "fill-opacity", 1 )
+        	.text(d => d3.format(".0%")(d.data.percent/100));
+        	
         
         	let legendRectSize=20;
     		let legendSpacing=7;
@@ -128,10 +129,15 @@ class WealthChart {
 
 		let path = svg.selectAll('path');
 		path.data(this.pie(dataArray));
-		path.transition().duration(100).attrTween('d', function(a){
+
+		path.transition().duration(1000).attrTween('d', function(a){
 			let i = d3.interpolate(this._current, a);
-			return arc(i())
+ 			this._current = i(0);
+  			return function(t) {
+    			return arc(i(t));
+  			};
 		})
+
 		let penter = path.enter()
 			.append('path');
 			
@@ -143,7 +149,10 @@ class WealthChart {
         	})
         	.attr("dy", ".4em")
         	.attr("text-anchor", "middle")
+        	.attr( "fill-opacity", 0 ).transition().delay( 850 )
+           	.attr( "fill-opacity", 1 )
         	.text(d => d3.format(".0%")(d.data.percent/100));
+
 
 
 		path.exit().remove()
