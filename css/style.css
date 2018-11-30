@@ -43,7 +43,8 @@ h2 {
     min-height: 152px;
     text-align: center;
 }
-#income-presentation-buttons-div{
+
+.presentation-buttons-div{
     width: 100%;
 }
 
@@ -64,7 +65,7 @@ h2 {
 .text{
     color:lightgray;
 }
-.text.legend-text {
+text.legend-text {
     font-size : 12px;
 }
 
@@ -108,12 +109,13 @@ div.hidden {
 #yearslider {
     margin-top: 20px;
 }
-#aggregateBarsDiv{
-    margin-top: 40px;
-}
 #yearWrapper{
     
     margin-top:50px;
+}
+
+.brush .selection {
+    fill-opacity: .5;
 }
 #incomeSlider{
     width: 500px;

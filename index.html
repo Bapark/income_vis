@@ -24,28 +24,26 @@
             <div class='buffer-top row title'>
                 <h1 class='col-xs-12 text'>Income Inequality in the United States</h1>
             </div>
-
-                <div id="income-presentation" class="buffer-top row title">
-                    <div id="income-presentation-title-div" class="col-xs-12">
-                        <h3 id='income-presentation-title' class='presentation-title text'>Text</h3>
-                    </div>
+            <div id="income-presentation" class="buffer-top row title">
+                <div id="income-presentation-title-div" class="col-xs-12">
+                    <h3 id='income-presentation-title' class='presentation-title text'>Text</h3>
                 </div>
-                <div  class="row title">
-                       
-                    <div class='row title text'>
-                        <div id='income-presentation-text-div' class="col-xs-12 textWrapper"></div>
-                    </div>
-                     <div id="income-presentation-buttons-div" class="col-xs-12 title">
-                            <div class='row title'>
-                                <button class='button-control' type='button' id='income-presentation-reverse-button'>
-                                    <span class="fas fa-step-backward"></span>
-                                </button>
-                                <button class='button-control' type='button' id='income-presentation-forward-button'>
-                                    <span class="fas fa-step-forward"></span>
-                                </button>
-                            </div>
-                    </div>
-                </div>            
+            </div>
+            <div  class="row title">                   
+                <div class='row title text'>
+                    <div id='income-presentation-text-div' class="col-xs-12 textWrapper"></div>
+                </div>
+                    <div id="income-presentation-buttons-div" class="col-xs-12 title presentation-buttons-div">
+                        <div class='row title'>
+                            <button class='button-control' type='button' id='income-presentation-reverse-button'>
+                                <span class="fas fa-step-backward"></span>
+                            </button>
+                            <button class='button-control' type='button' id='income-presentation-forward-button'>
+                                <span class="fas fa-step-forward"></span>
+                            </button>
+                        </div>
+                </div>
+            </div>            
             <div id ="incomeLineChart" class = "row title wrapper">
                 
                 <div class = 'col-12 inline inner-wrapper text'>
@@ -60,7 +58,7 @@
                         <div class='col-12 title'>
                             <div id = "incomeYearslider" class = "row title">
                                 <input type="range" id="incomeSlider"  name="Year"
-                                min="1966" value = "2016" max="2016" step = "1">
+                                min="1966" value = "2012" max="2017" step = "1">
                             </div>
                         </div>
                         <div id="radioSelectors" class = "col-xs-12 inline text">
@@ -117,12 +115,35 @@
                 </div>
 
             </div>
-
-            <div id='yearWrapper' class='row title text'>
+            <div id='wealth-title-div' class='row title text'>
                 <div class='col-12'>
                     <div class='row title'>
-                        <h1 id='wealthTitle' >Historical Wealth Distribution</h1>
+                        <h1 id='wealthTitle'>Historical Wealth Distribution</h1>
                     </div>
+                </div>
+            </div>
+            <div id="wealth-presentation" class="buffer-top row title">
+                <div id="wealth-presentation-title-div" class="col-xs-12">
+                    <h3 id='wealth-presentation-title' class='presentation-title text'>Text</h3>
+                </div>
+            </div>
+            <div  class="row title">
+                <div class='row title text'>
+                    <div id='wealth-presentation-text-div' class="col-xs-12 textWrapper"></div>
+                </div>
+                <div id="wealth-presentation-buttons-div" class="col-xs-12 title presentation-buttons-div">
+                    <div class='row title'>
+                        <button class='button-control' type='button' id='wealth-presentation-reverse-button'>
+                            <span class="fas fa-step-backward"></span>
+                        </button>
+                        <button class='button-control' type='button' id='wealth-presentation-forward-button'>
+                            <span class="fas fa-step-forward"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id='yearWrapper' class='row title text'>
+                <div class='col-12'>
                     <div class='row title'>
                         <h2 id='wealthYear' class=''>Year</h2>
                     </div>

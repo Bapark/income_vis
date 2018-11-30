@@ -4,6 +4,13 @@ if(!Array.prototype.last){
 	}
 }
 
+if(!String.prototype.capFirst) {
+	String.prototype.capFirst = function() {
+		if(this.lenght == 0) return this;
+		return this.charAt(0).toUpperCase() + this.slice(1);
+	}
+}
+
 d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
     //console.log(incomedata);
    
@@ -31,6 +38,9 @@ function createColorScales() {
 	colorScales.hispanic = d3.scaleLinear().domain([1,6])
 		//.interpolate(d3.interpolateHcl)
 		.range([d3.rgb("#550080"), d3.rgb('#d580ff')]);
+	colorScales.poverty = function() {
+		return '#e6e6e6';
+	}
 
 	colorScales.top5 = 1;
 	colorScales.highest = 2;
@@ -163,6 +173,20 @@ async function loadData(){
 	d3.select('#income-presentation-reverse-button')
 		.on('click', () => incomePresentation.movePrevious());
 
+	let wealthCards = await d3.json('data/wealthcards.json');
+	let wealthPresentationSideEffect = function (idx) {
+		yearSlider.node().value = wealthCards.cards[idx].year;
+		yearSlider.node().dispatchEvent(new Event('input'));
+	}
+	let wealthPresentation = new Presentation(wealthCards.cards,
+											'#wealth-presentation-title',
+											'#wealth-presentation-text-div',
+											wealthPresentationSideEffect);
+	d3.select('#wealth-presentation-forward-button')
+		.on('click', () => wealthPresentation.moveNext());
+	d3.select('#wealth-presentation-reverse-button')
+		.on('click', () => wealthPresentation.movePrevious());
+	console.log(yearSlider.node());
 }
 
 loadData();
