@@ -24,7 +24,7 @@ class IncomeTimePlot {
             
         //create the brush
         this.brush = d3.brush()
-                .extent([[0, 0], [this.width - 10, this.height]]);
+                .extent([[0, 0], [this.width - 25, this.height]]);
         this.svg.append('g')
             .attr('id', 'income-chart-brush')
             .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)

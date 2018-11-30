@@ -120,7 +120,7 @@
         },
         {
             "title" : "Exploration",
-            "text" : ["Feel free to use the buttons on the left and the time series slider to explore the data yourself. What interesting trends can you find? You can quickly select or deselect an entire demographic by clicking the top level button for that demographic. You can then refine your query as you see fit by selecting any sub-buttons."],
+            "text" : ["Feel free to use the buttons below, the time series slider, and the Income Plot brush to explore the data yourself. What interesting trends can you find? You can quickly select or deselect an entire demographic by clicking the top level button for that demographic. You can then refine your query as you see fit by selecting any sub-buttons."],
             "buttons" : ["overall-top"]
         }
 
