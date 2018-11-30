@@ -122,17 +122,12 @@ class WealthChart {
 
 		let arc = d3.arc().outerRadius(this.outerRad).innerRadius(this.innerRad);
 
-		function arcTween(a) {
-  			let i = d3.interpolate(this._current, a);
-  			this._current = i(0);
-  			return function(t) {
-   				return arc(i(t));
-  			};
-		}
-
 		let path = svg.selectAll('path');
 		path.data(this.pie(dataArray));
-
+		path.transition().duration(100).attrTween('d', function(a){
+			let i = d3.interpolate(this._current, a);
+			return arc(i())
+		})
 		let penter = path.enter()
 			.append('path');
 			

@@ -1,0 +1,42 @@
+{
+    "cards" : [
+        {
+            "title" : "Wealth Inequality in the USA",
+            "text" : ["Wealth distribution has always been a key topic of debate and an influence in the quality of life of many americans.", 
+            "It seems very unjust for the lower 90 percent of individuals have to split sometimes less than 20 percent of the total wealth share. Especially when you realize  people in the top .05 and .01 percent of wealth share have more than the bottom 90 percent of americans."],
+            "year" : 2012
+        },
+        {
+            "title" : "The Early 1900s",
+            "text" : ["In the beginning of the early 1900s we can see that the distribution of wealth is fairly concentrated in the top 10 percent of individuals. The bottom 90% of people are left with only 21 percent of the wealth", 
+            "We can see that essentially the top .5 percent of individuals have 26 percent of the wealth share during this time period"],
+            "year" : 1917
+        },
+        {
+            "title" : "In Anticipation of the Great Depression",
+            "text" : ["We can see that leading up to the great depression things become worse of the bottom 90 percent.", 
+            "The wealth share of the top 10 has increased to the greatest levels they will reach in the 1900s. It is not wonder the great depression his so many americans so hard when we see the wealth shares leading into it."],
+            "year" : 1928
+        },
+
+        {
+            "title" : "The New Deal",
+            "text" : ["After the economy collapsed, The New Deal was struck which included social safety nets, and higher tax rates on estates an the biggest earners.", 
+            "The wealth of the bottom 90% slowly crept back to pre depression levels for the bottom 90 percent (although the top 10 recovered much quicker.)"],
+            "year" : 1937
+        },
+        {
+            "title" : "The Rise of the Middle Class",
+            "text" : ["With a booming post world war 2 economy we see the rise of the middle class, as the bottom 90 percent reach peak levels of wealth share.", 
+            "At this point we see the most equal wealth distribution in the history of the United States, and poeple often use this time period as a bench mark of when america was 'great'. We can see that the majority of the top 10 percent has kept their share of wealth except for the top .01 percent who represent the multi-billionaires"],
+            "year" : 1985
+        },
+        {
+            "title" : "The Fall of Equality ",
+            "text" : ["Over the last 35 years we have seen that once again the ultra rich now have recovered much of the wealth share they lost with the rise of the middle class. We see that the top .01 percent has doubled their share over the last 30 years", 
+            "Although we stop our journey in 2012, this trend downward has continued. This is highlighted by President Obama's 2014 State of the Union Address where he cites the top 1 percent hold 40% of the nations wealth, while the bottom 80 own just 7%"],
+            "year" : 2012
+        },
+
+    ]
+}
