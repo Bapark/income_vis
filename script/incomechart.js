@@ -4,8 +4,8 @@
 class IncomeTimePlot {
     constructor(data, colorScales) {
         this.margin = { top: 20, right: 120, bottom: 60, left: 80 };
-        this.width = 950 - this.margin.left - this.margin.right;
-        this.height = 550 - this.margin.top - this.margin.bottom;
+        this.width = 775 - this.margin.left - this.margin.right;
+        this.height = 400 - this.margin.top - this.margin.bottom;
         this.data = data;
 
         this.colorScales = colorScales;
