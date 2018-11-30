@@ -2,14 +2,14 @@
     "cards" : [
         {
             "title" : "Introduction",
-            "text" : ["Income inequality in the United States is at 100 year high. Since the late 1960's the top 5% of income earners in America have seen their income sharply rise. At the same time income for the bottom 95% has at best risen modestly and at worst stayed stagnant.", 
+            "text" : ["Income inequality in the United States is at 100 year high. Since the late 1960's the top 5% of earners in America have seen their incomes sharply rise. At the same time income for the bottom 95% has at best risen modestly and at worst stayed stagnant.", 
             "In this presentation we will explore the data associated with income inequality in the United States and how it effects various racial demographics."],
             "buttons" : ["overall-top"]
         },
         {
             "title" : "The Thriving Upper Class",
             "text" : ["The top 20% of earners have done very well in the past 50 years. The lower 15% of top earners saw their income increase by 93.5% while the top 5% saw their income increase 113% over the same time span.",
-            "At no point did either group see their median income drop below $100k/year. As of 2017 both groups are well above the 6 figure mark."],
+            "At virtually no point did either group see their median income drop below $100k/year. As of 2017 both groups are well above the 6 figure mark."],
             "buttons" : ["overall-top5", "overall-highest"]
         },
         {
@@ -25,55 +25,65 @@
         },
         {
             "title" : "The Failing Lower Class",
-            "text" : ["The most socio-economically vulnerable have fared the worst. The bottom 40% of house holds have barely seen their incomes rise in the past 50 years. These individuals are also the most vulnerable to seeing their earning power decrease."],
+            "text" : [
+                "The most socio-economically vulnerable have fared the worst. The bottom 40% of house holds have barely seen their incomes rise in the past 50 years. At no point does the bottom 20% earn income at or above the poverty line.",
+                "These individuals are also the most vulnerable to seeing their earning power decrease."
+                
+            ],
             "buttons" : ["overall-second", "overall-lowest"]
         },
         {
             "title" : "The Failing Lower Class",
             "text" : ["The most socio-economically vulnerable have fared the worst. The bottom 40% of house holds have barely seen their incomes rise in the past 50 years. These individuals are also the most vulnerable to seeing their earning power decrease.",
-            "When put into context with the Top 5% the lowest earners barely even register on the plot."],
+            "When put into context with the Top 5% the lowest earners barely even register on the plot. For every $10,000 of income earned the top 5% takes home nearly 4.5x the amount of both groups combined."],
             "buttons" : ["overall-top5", "overall-second", "overall-lowest"]
         },
         {
             "title" : "The Absolute Income Gap",
-            "text" : ["The absolute wealth gap is the difference in median income between the Top 5% and the lowest 20% of earners. It was at its lowest in 1968 at $165,054. In 2017 that gap was at $372031, a 125% increase.", "For every $10,000 of income generated a median Top 5% earner would take home $4,500 while a median earner in the lowest 20% would barely see $100."],
+            "text" : [
+                "The absolute wealth gap is the difference in median income between the Top 5% and the lowest 20% of earners. It was at its lowest in 1968 at $165,054. In 2017 that gap was at $372031, a 125% increase.", 
+                "For every $10,000 of income generated a median Top 5% earner would take home $4,500 while a median earner in the lowest 20% would barely see $100.",
+                "Use the brush on the Income Plot to explore the absolute wealth gap for various time periods."
+            ],
             "buttons" : ["overall-top5", "overall-lowest"]
         },
         {
             "title" : "Race and Income - Above the Line",
-            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile."],
+            "text" : ["At every income level White and Asian earners earned above the overall average for their pentile."],
             "buttons" : ["overall-top5", "white-top5", "asian-top5"]
         },
         {
             "title" : "Race and Income - Above the Line",
-            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile."],
+            "text" : ["At every income level White and Asian earners earned above the overall average for their pentile."],
             "buttons" : ["overall-highest", "white-highest", "asian-highest"]
         },
         {
             "title" : "Race and Income - Above the Line",
-            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile."],
+            "text" : ["At every income level White and Asian earners earned above the overall average for their pentile."],
             "buttons" : ["overall-fourth", "white-fourth", "asian-fourth"]
         },
         {
             "title" : "Race and Income - Above the Line",
-            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile.",
+            "text" : ["At every income level White and Asian earners earned above the overall average for their pentile.",
             "As income levels drop, the relative gap gets wider."],
             "buttons" : ["overall-third", "white-third", "asian-third"]
         },
         {
             "title" : "Race and Income - Above the Line",
-            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile.",
-            "As income levels drop, the relative gap gets wider."],
+            "text" : [
+                "At every income level White and Asian earners earned above the overall average for their pentile.",
+                "As income levels drop, the relative gap gets wider."
+            ],
             "buttons" : ["overall-second", "white-second", "asian-second"]
         },
         {
             "title" : "Race and Income - Above the Line",
-            "text" : ["At virtually every income level White and Asian earners earned above the overall average for their pentile.", "2003 is the only year that Asian earners earned less than the overall group."],
+            "text" : ["At every income level White and Asian earners earned above the overall average for their pentile.", "2003 is the only year that Asian earners earned less than the overall group."],
             "buttons" : ["overall-lowest", "white-lowest", "asian-lowest"]
         },
         {
             "title" : "Race and Income - Below the Line",
-            "text" : ["At virtually every income level black and Asian earners earned above the overall average for their pentile."],
+            "text" : ["At every income level black and Asian earners earned above the overall average for their pentile."],
             "buttons" : ["overall-top5", "black-top5", "hispanic-top5"]
         },
         {
@@ -94,13 +104,18 @@
         },
         {
             "title" : "Race and Income - Below the Line",
-            "text" : ["At virtually every income level black and hispanic earners earned above the overall average for their pentile.",
-            "As income levels drop, the relative gap gets wider."],
+            "text" : [
+                "At every income level black and hispanic earners earned above the overall average for their pentile.",
+                "White and Asian earners don't fall below the poverty line until the lowest pentile. On the other hand, Black earners in both the 2nd and lowest pentiles are below the poverty line while Hispanic earners continusously flirt with the line."
+            ],
             "buttons" : ["overall-second", "black-second", "hispanic-second"]
         },
         {
             "title" : "Race and Income - Below the Line",
-            "text" : ["At virtually every income level black and hispanic earners earned above the overall average for their pentile.", "As income levels drop, the relative gap gets wider."],
+            "text" : [
+                "At every income level black and hispanic earners earned above the overall average for their pentile.", "As income levels drop, the relative gap gets wider.",
+                "At this point all groups are below the poverty line. However Black earners suffer the most from extreme poverty, at no point earning more than $10,000/year. This equates to roughly $5/hr at a full time job."
+            ],
             "buttons" : ["overall-lowest", "black-lowest", "hispanic-lowest"]
         },
         {
