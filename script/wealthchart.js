@@ -2,17 +2,28 @@ class WealthChart {
 	constructor(data){
 		this.wealthData = data;
 		this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
-        this.width = 875 - this.margin.left - this.margin.right;
-        this.height = 500 - this.margin.top - this.margin.bottom;
+        this.width = 600 - this.margin.left - this.margin.right;
+        this.height = 600 - this.margin.top - this.margin.bottom;
 
         this.pie = d3.pie()
-						.value((d)=>{return d.percent}) //TODO set correct data
+						.value((d)=>{return d.percent})
 						.sort(null)
 						.padAngle(.02);
 
-		this.outerRad = 180;
-		this.innerRad = 120;
-
+		this.outerRad = 220;
+		this.innerRad = 150;
+		let tenPercentScale = d3.scaleLinear()
+			.domain([1,5])
+			.range([d3.rgb(' #4d4d33'), d3.rgb('#adad85')]);
+		this.color = function(i) {
+			if(i < 1) {
+				return '#3366ff';
+			}
+			return tenPercentScale(i);
+		}
+		
+		
+		//d3.scaleOrdinal(d3.schemeCategory10);
         this.drawChart();
         
 	}
@@ -25,17 +36,16 @@ class WealthChart {
 		let defData = this.wealthData.filter( (d)=>{return d.year == sliderVal});
 
 		let dataArray = [
-	    	{ name: "90-95", percent: defData[0]["90-95"] },
-	    	{ name: "95-99", percent: defData[0]["95-99"]  },
-	    	{ name: "99-99.5", percent: defData[0]["99-99.5"]  },
-	    	{ name: "99.5-99.9", percent: defData[0]["99.5-99.9"]  },
-	    	{ name: "99.9-99.99", percent: defData[0]["99.9-99.99"]  },
-	    	{ name: "bottom_90", percent: defData[0].bottom_90  }
+	    	{ name: "Bottom 90%", percent: defData[0].bottom_90  },
+	    	{ name: "90-95%", percent: defData[0]["90-95"] },
+	    	{ name: "95-99%", percent: defData[0]["95-99"]  },
+	    	{ name: "99-99.5%", percent: defData[0]["99-99.5"]  },
+	    	{ name: "99.5-99.9%", percent: defData[0]["99.5-99.9"]  },
+	    	{ name: "99.9-99.99%", percent: defData[0]["99.9-99.99"]  }
 		];
 
 
-		let color  = d3.scaleOrdinal(d3.schemeCategory10);
-		
+		let that = this;
 
 		let svg = d3.select('#wealthChart').append('svg')
 			.attr('width',this.width)
@@ -51,28 +61,51 @@ class WealthChart {
 			.enter()
 			.append('path')
 			.attr('d',arc)
-			.attr('fill',function(d,i){
-					return color(d.data.name); 
-				});
+			.attr('fill',(d,i) => that.color(i));
 		
-		let that = this;
+		 let text=svg.selectAll('text')
+        	.data(this.pie(dataArray))
+        	.enter()
+        	.append("text")
+        	.attr("transform", function (d) {
+        	    return "translate(" + arc.centroid(d) + ")";
+        	})
+        	.attr("dy", ".4em")
+        	.attr("text-anchor", "middle")
+			.attr( "fill-opacity", 0 )
+			.transition()
+			.delay( 500 )
+           	.attr( "fill-opacity", 1 )
+			.text(d => d3.format(".0%")(d.data.percent/100));
+        	
         
+        	let legendRectSize=20;
+    		let legendSpacing=7;
+    		let legendHeight=legendRectSize+legendSpacing;
+ 		
+ 		
+    		
 
-		//todo set transition
+    		d3.select('#wealthSvg').append('g').attr('id', 'legendWrap');
+    		let legWrap = d3.select('#legendWrap').attr('transform', 'translate(' + (this.width/2  -10) + ','+ (this.height/2 - 5) +')');
+
+    		legWrap.selectAll('rect').data(dataArray).enter().append('rect')
+    			.classed('legend', true)
+    		    .attr('transform', (d,i) => { return 'translate(-35,' + ((i*legendHeight)-65) + ')'; })
+    		    .attr('width', legendRectSize)
+    			.attr('height', legendRectSize)
+    			.attr('rx', 20)
+    			.attr('ry', 20)
+    			.attr('style',  (d,i)=>{ return 'fill:' + that.color(i) +';' + 'stroke:' + that.color(i) +';'});;
+
+    		legWrap.selectAll('text').data(dataArray).enter().append('text')
+    			.classed('legendText', true)
+    			.attr('transform', (d,i) => { return 'translate(-10,' + ((i*legendHeight)-50) + ')'; })
+    			.text((d)=>{return d.name;});
 
 	}
 
 	updateChart(){
-
-/*
-		function arcTween(a) {
-  			let i = d3.interpolate(this._current, a);
-  			this._current = i(0);
-  			return function(t) {
-   				return arc(i(t));
-  			};
-		}
-*/
 		let that = this;
 		let sliderVal = document.getElementById("slider").value;
 		d3.select('#wealthYear').text(sliderVal);
@@ -81,12 +114,12 @@ class WealthChart {
 		});
 		let svg = d3.select('#wealthSvg');
 		let dataArray = [
+	    	{ name: "bottom_90", percent: defData[0].bottom_90  },
 	    	{ name: "90-95", percent: defData[0]["90-95"] },
 	    	{ name: "95-99", percent: defData[0]["95-99"]  },
 	    	{ name: "99-99.5", percent: defData[0]["99-99.5"]  },
 	    	{ name: "99.5-99.9", percent: defData[0]["99.5-99.9"]  },
-	    	{ name: "99.9-99.99", percent: defData[0]["99.9-99.99"]  },
-	    	{ name: "bottom_90", percent: defData[0].bottom_90  }
+	    	{ name: "99.9-99.99", percent: defData[0]["99.9-99.99"]  }
 		];
 
 		
@@ -96,22 +129,38 @@ class WealthChart {
 		let path = svg.selectAll('path');
 		path.data(this.pie(dataArray));
 
+		path.transition().duration(1000).attrTween('d', function(a){
+			let i = d3.interpolate(this._current, a);
+ 			this._current = i(0);
+  			return function(t) {
+    			return arc(i(t));
+  			};
+		});
+
 		let penter = path.enter()
 			.append('path');
 			
 
+		let text= svg.select('g').selectAll('text')
+        	.data(this.pie(dataArray))
+        	.attr("transform", function (d) {
+        	    return "translate(" + arc.centroid(d) + ")";
+        	})
+        	.attr("dy", ".4em")
+        	.attr("text-anchor", "middle")
+			.attr( "fill-opacity", 0 )
+			.transition()
+			.delay( 850 )
+           	.attr( "fill-opacity", 1 )
+        	.text(d => d3.format(".0%")(d.data.percent/100));
+
+
+
 		path.exit().remove()
 
+		
 		path = path.merge(penter);
-		path
-			.attr('d',arc)
-			.attr('fill',function(d,i){
-				return color(d.data.name); 
-			});
-
-			//.transition().duration(750).attrTween("d", arcTween);;
-
-
+		path.attr('d',arc);
 	}
 
 

@@ -4,14 +4,9 @@
 .body{
     background-color: #161616;
 }
-.view {
 
-}
 .sub-button {
     margin-left: 15px;
-}
-#radioSelectors{
-
 }
 
 h2 {
@@ -43,12 +38,13 @@ h2 {
     min-height: 152px;
     text-align: center;
 }
-#income-presentation-buttons-div{
-    width: 100%;
+
+.presentation-buttons-div{
+   width : 100%;
 }
 
 .buffer-top{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 .button-control {
    border-style: solid;
@@ -58,9 +54,7 @@ h2 {
    width: 60px;
    height: 40px;
 }
-.btn{
 
-}
 .text{
     color:lightgray;
 }
@@ -88,6 +82,11 @@ p{
     text-align: center;
 }
 
+p.presentation-text {
+    line-height : 20px;
+    margin-bottom : 5px;
+}
+
 div.tooltip {
     position: absolute;			
     text-align: center;			
@@ -106,14 +105,11 @@ div.hidden {
     display : none;
 }
 #yearslider {
+    width: 100%;
     margin-top: 20px;
 }
-#aggregateBarsDiv{
-    margin-top: 40px;
-}
 #yearWrapper{
-    
-    margin-top:50px;
+    width: 100%;
 }
 
 .brush .selection {
@@ -121,4 +117,14 @@ div.hidden {
 }
 #incomeSlider{
     width: 500px;
+}
+#wealthTitle{
+    margin-top: 70px;
+}
+#wealthStoryTextWrapper{
+    min-height: 176px;
+}
+#slider{
+    width: 400px;
+    margin-bottom: 30px;
 }

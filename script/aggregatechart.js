@@ -4,8 +4,8 @@
 class AggregateIncomeBarPlot {
     constructor(data, colorScales) {
         this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
-        this.width = 875 - this.margin.left - this.margin.right;
-        this.height = 500 - this.margin.top - this.margin.bottom;
+        this.width = 700 - this.margin.left - this.margin.right;
+        this.height = 400 - this.margin.top - this.margin.bottom;
         this.header = d3.select('#aggregateHeader');
         this.data = data;
         this.reducedData = {};
@@ -85,7 +85,8 @@ class AggregateIncomeBarPlot {
         this.yAxis = d3.axisLeft();
         this.xAxis.scale(this.xScale);
         this.yAxis.scale(this.yScale)
-            .ticks(10);
+            .ticks(10)
+            .tickFormat(d3.format("$,"));
         d3.select('#x-axis-aggregatechart').call(this.xAxis);
         d3.select('#y-axis-aggregatechart').call(this.yAxis);
         
@@ -136,11 +137,13 @@ class AggregateIncomeBarPlot {
 
 
         bars.attr('fill', (d) => {
-                return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
+                return that.colorScales[d.category](that.colorScales[d.pentile])})
             .attr('width', this.xScale.bandwidth())
             .attr('height', (d) => this.height - this.yScale(d.value))
             .attr('x', (d) => this.xScale(`${d.category.toUpperCase()} ${d.pentile.toUpperCase()}`))
-            .attr('y', (d) => this.yScale(d.value));
+            .attr('y', (d) => this.yScale(d.value))
+            .append('title')
+            .text(d => `${d3.format("$,.2f")(d.value)}`);
         this.barGroup
             .attr('transform', `translate(${this.margin.left + 1}, ${this.margin.top})`);
 

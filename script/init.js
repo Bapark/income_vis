@@ -11,16 +11,6 @@ if(!String.prototype.capFirst) {
 	}
 }
 
-d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
-    //console.log(incomedata);
-   
-});
-
-d3.csv("data/highest_marginal_income_taxrates.csv").then(incomedata => {
-    //console.log(incomedata);
-   
-});
-
 function createColorScales() {
 	let colorScales = {};
 	colorScales.overall = d3.scaleLinear().domain([1,6])
@@ -38,6 +28,9 @@ function createColorScales() {
 	colorScales.hispanic = d3.scaleLinear().domain([1,6])
 		//.interpolate(d3.interpolateHcl)
 		.range([d3.rgb("#550080"), d3.rgb('#d580ff')]);
+	colorScales.poverty = function() {
+		return '#e6e6e6';
+	}
 
 	colorScales.top5 = 1;
 	colorScales.highest = 2;
@@ -135,7 +128,6 @@ async function loadData(){
 		return val;
 	}
 	let wealthData = await d3.csv('data/wealthdata.csv', wealthFormater);
-	console.log(wealthData);
 	wealthChart = new WealthChart(wealthData);
 
 	let yearSlider = d3.select('#slider');
@@ -146,7 +138,7 @@ async function loadData(){
 	yearSlider.on('input', function() {		
 		wealthChart.updateChart();
 	});
-	yearSlider.attr('style', 'width: 25%;');
+	yearSlider.attr('style', 'width: 60%;');
 
 	let incomeCards = await d3.json('data/incomecards.json');
 	let incomePresentationSideEffect = function (idx) {
@@ -170,8 +162,19 @@ async function loadData(){
 	d3.select('#income-presentation-reverse-button')
 		.on('click', () => incomePresentation.movePrevious());
 
+	let wealthCards = await d3.json('data/wealthcards.json');
+	let wealthPresentationSideEffect = function (idx) {
+		yearSlider.node().value = wealthCards.cards[idx].year;
+		yearSlider.node().dispatchEvent(new Event('input'));
+	}
+	let wealthPresentation = new Presentation(wealthCards.cards,
+											'#wealth-presentation-title',
+											'#wealth-presentation-text-div',
+											wealthPresentationSideEffect);
+	d3.select('#wealth-presentation-forward-button')
+		.on('click', () => wealthPresentation.moveNext());
+	d3.select('#wealth-presentation-reverse-button')
+		.on('click', () => wealthPresentation.movePrevious());
 }
 
 loadData();
-
-//TODO construct view

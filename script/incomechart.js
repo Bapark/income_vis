@@ -4,8 +4,8 @@
 class IncomeTimePlot {
     constructor(data, colorScales) {
         this.margin = { top: 20, right: 120, bottom: 60, left: 80 };
-        this.width = 950 - this.margin.left - this.margin.right;
-        this.height = 550 - this.margin.top - this.margin.bottom;
+        this.width = 700 - this.margin.left - this.margin.right;
+        this.height = 400 - this.margin.top - this.margin.bottom;
         this.data = data;
 
         this.colorScales = colorScales;
@@ -21,7 +21,16 @@ class IncomeTimePlot {
         this.div = d3.select('body')
             .append('div')
             .attr('class', 'tooltip hidden');
-
+            
+        //create the brush
+        this.brush = d3.brush()
+                .extent([[0, 0], [this.width - 25, this.height]]);
+        this.svg.append('g')
+            .attr('id', 'income-chart-brush')
+            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+            .attr('class', 'brush')
+            .call(this.brush);
+            
         let svgGroup = this.svg.append('g').classed('wrapper-group', true);
 
         //Text and axes skeleton
@@ -45,8 +54,12 @@ class IncomeTimePlot {
             .classed('axis-label', true)
             .attr('transform', 'translate(20, ' + (this.height/2 + this.margin.bottom) + ') ' +
                                'rotate(-90)');
-        
-        this.setupScales(1967, 2017, 0, 500000);
+        this.povertyline = svgGroup.append('g')
+            .append('path')
+            .attr('id', 'poverty-line-line')
+            .attr('stroke', '#e6e6e6')
+            .attr('stroke-width', 1)
+            .attr('fill', 'none');
         
         this.lineGroup = this.svg.append('g')
                     .attr('id', 'line-group-incomechart');
@@ -55,21 +68,12 @@ class IncomeTimePlot {
                             .attr('id', 'legend-group')
                             .attr('transform', `translate(${this.margin.left + this.width - 15}, 5)`);
 
-        //create the brush
-        this.brush = d3.brush()
-                .extent([[0, 0], [this.xScale(2017) + 2, this.height]]);
-        this.svg.append('g')
-            .attr('id', 'income-chart-brush')
-            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-            .attr('class', 'brush')
-            .call(this.brush);
-
-            
         //Create the group to display wealth gap
         this.wealthGroup = this.svg.append('g')
             .attr('id', 'income-chart-wealth-gap-data')
             .attr('transform', `translate(${this.margin.left + 15}, ${this.margin.top + 60})`);
-        
+
+        this.setupScales(1967, 2017, 0, 500000);
         this.updatePlot();
     }
 
@@ -110,6 +114,7 @@ class IncomeTimePlot {
         });
 
         //Set up new scales
+        maxY = maxY > 25000 ? maxY : 25000; //clamp max y so the poverty line shows up
         this.setupScales(minX, 2017, minY, maxY);
 
         let paths = this.lineGroup.selectAll('path')
@@ -125,12 +130,19 @@ class IncomeTimePlot {
                         .curve(d3.curveStep);
         paths.attr('d', (d) => lineFn(d.data))
             .attr('stroke', (d) => {
-                return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
+                return that.colorScales[d.category](that.colorScales[d.pentile])})
             .attr('stroke-width', 2)
             .attr('fill', 'none')
             .attr('id', (d) => `${d.category}-${d.pentile}-line`);
-
+        
         //construct the legend
+        if(minY < 24600) {
+            nextData.push({
+                'category' : 'poverty',
+                'pentile' : 'line',
+                'data' : [] //dummy data for brush
+            });
+        }
         let legendGroups = this.legendGroup.selectAll('g')
             .data(nextData);
         let legendGroupsEnter = legendGroups.enter().append('g');
@@ -274,8 +286,20 @@ class IncomeTimePlot {
         this.xAxis.scale(this.xScale)
             .tickFormat(d3.format(""));
         this.yAxis.scale(this.yScale)
-                .ticks(10);
+                .ticks(10)
+                .tickFormat(d3.format("$,"))
         d3.select('#x-axis-incomechart').call(this.xAxis);
         d3.select('#y-axis-incomechart').call(this.yAxis);
+
+        //draw povertyline
+        let povertyY = this.yScale(24600) + this.margin.top;
+        if(minY < 24600 && maxY > 24600) {
+            this.povertyline
+                .attr('d', 
+                    `M ${this.margin.left} ${povertyY} L ${this.width + this.margin.left - 25} ${povertyY}`);
+        } else {
+            this.povertyline
+                .attr('d', '');
+        }
     }
 }
