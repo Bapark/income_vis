@@ -130,7 +130,7 @@ class IncomeTimePlot {
                         .curve(d3.curveStep);
         paths.attr('d', (d) => lineFn(d.data))
             .attr('stroke', (d) => {
-                return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
+                return that.colorScales[d.category](that.colorScales[d.pentile])})
             .attr('stroke-width', 2)
             .attr('fill', 'none')
             .attr('id', (d) => `${d.category}-${d.pentile}-line`);

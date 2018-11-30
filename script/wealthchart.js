@@ -72,12 +72,11 @@ class WealthChart {
         	})
         	.attr("dy", ".4em")
         	.attr("text-anchor", "middle")
-        	.style({
-        	    fill:'#fff',
-        	    'font-size':'10px'})
-        	.attr( "fill-opacity", 0 ).transition().delay( 500 )
+			.attr( "fill-opacity", 0 )
+			.transition()
+			.delay( 500 )
            	.attr( "fill-opacity", 1 )
-        	.text(d => d3.format(".0%")(d.data.percent/100));
+			.text(d => d3.format(".0%")(d.data.percent/100));
         	
         
         	let legendRectSize=20;
@@ -136,7 +135,7 @@ class WealthChart {
   			return function(t) {
     			return arc(i(t));
   			};
-		})
+		});
 
 		let penter = path.enter()
 			.append('path');
@@ -149,7 +148,9 @@ class WealthChart {
         	})
         	.attr("dy", ".4em")
         	.attr("text-anchor", "middle")
-        	.attr( "fill-opacity", 0 ).transition().delay( 850 )
+			.attr( "fill-opacity", 0 )
+			.transition()
+			.delay( 850 )
            	.attr( "fill-opacity", 1 )
         	.text(d => d3.format(".0%")(d.data.percent/100));
 
