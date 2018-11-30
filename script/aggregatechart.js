@@ -137,7 +137,7 @@ class AggregateIncomeBarPlot {
 
 
         bars.attr('fill', (d) => {
-                return that.colorScales[d.category](that.colorScales[d.pentile])}) //TODO add color scales
+                return that.colorScales[d.category](that.colorScales[d.pentile])})
             .attr('width', this.xScale.bandwidth())
             .attr('height', (d) => this.height - this.yScale(d.value))
             .attr('x', (d) => this.xScale(`${d.category.toUpperCase()} ${d.pentile.toUpperCase()}`))
