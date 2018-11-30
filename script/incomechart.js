@@ -134,12 +134,13 @@ class IncomeTimePlot {
             .attr('stroke-width', 2)
             .attr('fill', 'none')
             .attr('id', (d) => `${d.category}-${d.pentile}-line`);
-
+        
         //construct the legend
         if(minY < 24600) {
             nextData.push({
                 'category' : 'poverty',
-                'pentile' : 'line'
+                'pentile' : 'line',
+                'data' : [] //dummy data for brush
             });
         }
         let legendGroups = this.legendGroup.selectAll('g')
