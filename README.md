@@ -2,6 +2,7 @@
 This is a visualization project using the javascript library D3 that presents data on income and wealth inequality in the United States of America
 
 [Live project page](https://jarednielson.github.io/income_vis)
+
 [Screen Cast](https://www.youtube.com)
 
 Files in this project written by Jared Nielson and Brian Park
