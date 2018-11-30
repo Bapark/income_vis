@@ -89,6 +89,11 @@ p{
     text-align: center;
 }
 
+p.presentation-text {
+    line-height : 20px;
+    margin-bottom : 5px;
+}
+
 div.tooltip {
     position: absolute;			
     text-align: center;			
