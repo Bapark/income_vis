@@ -4,7 +4,7 @@
 class IncomeTimePlot {
     constructor(data, colorScales) {
         this.margin = { top: 20, right: 120, bottom: 60, left: 80 };
-        this.width = 775 - this.margin.left - this.margin.right;
+        this.width = 700 - this.margin.left - this.margin.right;
         this.height = 400 - this.margin.top - this.margin.bottom;
         this.data = data;
 
@@ -21,7 +21,18 @@ class IncomeTimePlot {
         this.div = d3.select('body')
             .append('div')
             .attr('class', 'tooltip hidden');
-
+            
+        this.setupScales(1967, 2017, 0, 500000);
+        
+        //create the brush
+        this.brush = d3.brush()
+                .extent([[0, 0], [this.xScale(2017) + 2, this.height]]);
+        this.svg.append('g')
+            .attr('id', 'income-chart-brush')
+            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+            .attr('class', 'brush')
+            .call(this.brush);
+            
         let svgGroup = this.svg.append('g').classed('wrapper-group', true);
 
         //Text and axes skeleton
@@ -46,7 +57,6 @@ class IncomeTimePlot {
             .attr('transform', 'translate(20, ' + (this.height/2 + this.margin.bottom) + ') ' +
                                'rotate(-90)');
         
-        this.setupScales(1967, 2017, 0, 500000);
         
         this.lineGroup = this.svg.append('g')
                     .attr('id', 'line-group-incomechart');
@@ -55,16 +65,6 @@ class IncomeTimePlot {
                             .attr('id', 'legend-group')
                             .attr('transform', `translate(${this.margin.left + this.width - 15}, 5)`);
 
-        //create the brush
-        this.brush = d3.brush()
-                .extent([[0, 0], [this.xScale(2017) + 2, this.height]]);
-        this.svg.append('g')
-            .attr('id', 'income-chart-brush')
-            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-            .attr('class', 'brush')
-            .call(this.brush);
-
-            
         //Create the group to display wealth gap
         this.wealthGroup = this.svg.append('g')
             .attr('id', 'income-chart-wealth-gap-data')
@@ -274,7 +274,8 @@ class IncomeTimePlot {
         this.xAxis.scale(this.xScale)
             .tickFormat(d3.format(""));
         this.yAxis.scale(this.yScale)
-                .ticks(10);
+                .ticks(10)
+                .tickFormat(d3.format("$,"))
         d3.select('#x-axis-incomechart').call(this.xAxis);
         d3.select('#y-axis-incomechart').call(this.yAxis);
     }
