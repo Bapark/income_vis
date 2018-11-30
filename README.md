@@ -3,7 +3,7 @@ This is a visualization project using the javascript library D3 that presents da
 
 [Live project page](https://jarednielson.github.io/income_vis)
 
-[Screen Cast](https://www.youtube.com)
+[Screen Cast](https://youtu.be/TVY2nGBoktE)
 
 Files in this project written by Jared Nielson and Brian Park
 
