@@ -4,14 +4,9 @@
 .body{
     background-color: #161616;
 }
-.view {
 
-}
 .sub-button {
     margin-left: 15px;
-}
-#radioSelectors{
-
 }
 
 h2 {
@@ -59,9 +54,7 @@ h2 {
    width: 60px;
    height: 40px;
 }
-.btn{
 
-}
 .text{
     color:lightgray;
 }

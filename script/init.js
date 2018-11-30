@@ -11,16 +11,6 @@ if(!String.prototype.capFirst) {
 	}
 }
 
-d3.csv("data/H-8Median_household_Income_2017adjusted.csv").then(incomedata => {
-    //console.log(incomedata);
-   
-});
-
-d3.csv("data/highest_marginal_income_taxrates.csv").then(incomedata => {
-    //console.log(incomedata);
-   
-});
-
 function createColorScales() {
 	let colorScales = {};
 	colorScales.overall = d3.scaleLinear().domain([1,6])
@@ -138,7 +128,6 @@ async function loadData(){
 		return val;
 	}
 	let wealthData = await d3.csv('data/wealthdata.csv', wealthFormater);
-	console.log(wealthData);
 	wealthChart = new WealthChart(wealthData);
 
 	let yearSlider = d3.select('#slider');
@@ -186,9 +175,6 @@ async function loadData(){
 		.on('click', () => wealthPresentation.moveNext());
 	d3.select('#wealth-presentation-reverse-button')
 		.on('click', () => wealthPresentation.movePrevious());
-	console.log(yearSlider.node());
 }
 
 loadData();
-
-//TODO construct view
