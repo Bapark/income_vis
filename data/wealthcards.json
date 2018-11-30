@@ -1,0 +1,16 @@
+{
+    "cards" : [
+        {
+            "title" : "Introduction",
+            "text" : ["Income inequality in the United States is at 100 year high. Since the late 1960's the top 5% of income earners in America have seen their income sharply rise. At the same time income for the bottom 95% has at best risen modestly and at worst stayed stagnant.", 
+            "In this presentation we will explore the data associated with income inequality in the United States and how it effects various racial demographics."],
+            "year" : 1950
+        },
+        {
+            "title" : "The Thriving Upper Class",
+            "text" : ["The top 20% of earners have done very well in the past 50 years. The lower 15% of top earners saw their income increase by 93.5% while the top 5% saw their income increase 113% over the same time span.",
+            "At no point did either group see their median income drop below $100k/year. As of 2017 both groups are well above the 6 figure mark."],
+            "year" : 1940
+        }
+    ]
+}

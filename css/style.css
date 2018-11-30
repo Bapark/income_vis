@@ -43,7 +43,8 @@ h2 {
     min-height: 152px;
     text-align: center;
 }
-#income-presentation-buttons-div{
+
+.presentation-buttons-div{
     width: 100%;
 }
 

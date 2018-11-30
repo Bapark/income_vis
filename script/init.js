@@ -170,6 +170,20 @@ async function loadData(){
 	d3.select('#income-presentation-reverse-button')
 		.on('click', () => incomePresentation.movePrevious());
 
+	let wealthCards = await d3.json('data/wealthcards.json');
+	let wealthPresentationSideEffect = function (idx) {
+		yearSlider.node().value = wealthCards.cards[idx].year;
+		yearSlider.node().dispatchEvent(new Event('input'));
+	}
+	let wealthPresentation = new Presentation(wealthCards.cards,
+											'#wealth-presentation-title',
+											'#wealth-presentation-text-div',
+											wealthPresentationSideEffect);
+	d3.select('#wealth-presentation-forward-button')
+		.on('click', () => wealthPresentation.moveNext());
+	d3.select('#wealth-presentation-reverse-button')
+		.on('click', () => wealthPresentation.movePrevious());
+	console.log(yearSlider.node());
 }
 
 loadData();
