@@ -146,7 +146,7 @@ async function loadData(){
 	yearSlider.on('input', function() {		
 		wealthChart.updateChart();
 	});
-	yearSlider.attr('style', 'width: 25%;');
+	yearSlider.attr('style', 'width: 60%;');
 
 	let incomeCards = await d3.json('data/incomecards.json');
 	let incomePresentationSideEffect = function (idx) {

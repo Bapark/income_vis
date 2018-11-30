@@ -2,8 +2,8 @@ class WealthChart {
 	constructor(data){
 		this.wealthData = data;
 		this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
-        this.width = 1000 - this.margin.left - this.margin.right;
-        this.height = 700 - this.margin.top - this.margin.bottom;
+        this.width = 600 - this.margin.left - this.margin.right;
+        this.height = 600 - this.margin.top - this.margin.bottom;
 
         this.pie = d3.pie()
 						.value((d)=>{return d.percent})
