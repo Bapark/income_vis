@@ -22,11 +22,9 @@ class IncomeTimePlot {
             .append('div')
             .attr('class', 'tooltip hidden');
             
-        this.setupScales(1967, 2017, 0, 500000);
-        
         //create the brush
         this.brush = d3.brush()
-                .extent([[0, 0], [this.xScale(2017) + 2, this.height]]);
+                .extent([[0, 0], [this.width - 10, this.height]]);
         this.svg.append('g')
             .attr('id', 'income-chart-brush')
             .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
@@ -56,7 +54,9 @@ class IncomeTimePlot {
             .classed('axis-label', true)
             .attr('transform', 'translate(20, ' + (this.height/2 + this.margin.bottom) + ') ' +
                                'rotate(-90)');
-        
+        this.povertyline = svgGroup.append('g')
+            .append('path')
+            .attr('id', 'poverty-line');
         
         this.lineGroup = this.svg.append('g')
                     .attr('id', 'line-group-incomechart');
@@ -69,7 +69,8 @@ class IncomeTimePlot {
         this.wealthGroup = this.svg.append('g')
             .attr('id', 'income-chart-wealth-gap-data')
             .attr('transform', `translate(${this.margin.left + 15}, ${this.margin.top + 60})`);
-        
+
+        this.setupScales(1967, 2017, 0, 500000);
         this.updatePlot();
     }
 
@@ -110,6 +111,7 @@ class IncomeTimePlot {
         });
 
         //Set up new scales
+        maxY = maxY > 25000 ? maxY : 25000; //clamp max y so the poverty line shows up
         this.setupScales(minX, 2017, minY, maxY);
 
         let paths = this.lineGroup.selectAll('path')
@@ -278,5 +280,16 @@ class IncomeTimePlot {
                 .tickFormat(d3.format("$,"))
         d3.select('#x-axis-incomechart').call(this.xAxis);
         d3.select('#y-axis-incomechart').call(this.yAxis);
+
+        //draw povertyline
+        let povertyY = this.yScale(24600) + this.margin.top;
+        if(minY < 24600 && maxY > 24600) {
+            this.povertyline
+                .attr('d', 
+                    `M ${this.margin.left} ${povertyY} L ${this.width + this.margin.left - 25} ${povertyY}`);
+        } else {
+            this.povertyline
+                .attr('d', '');
+        }
     }
 }
