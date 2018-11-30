@@ -56,7 +56,10 @@ class IncomeTimePlot {
                                'rotate(-90)');
         this.povertyline = svgGroup.append('g')
             .append('path')
-            .attr('id', 'poverty-line');
+            .attr('id', 'poverty-line-line')
+            .attr('stroke', '#e6e6e6')
+            .attr('stroke-width', 1)
+            .attr('fill', 'none');
         
         this.lineGroup = this.svg.append('g')
                     .attr('id', 'line-group-incomechart');
@@ -133,6 +136,12 @@ class IncomeTimePlot {
             .attr('id', (d) => `${d.category}-${d.pentile}-line`);
 
         //construct the legend
+        if(minY < 24600) {
+            nextData.push({
+                'category' : 'poverty',
+                'pentile' : 'line'
+            });
+        }
         let legendGroups = this.legendGroup.selectAll('g')
             .data(nextData);
         let legendGroupsEnter = legendGroups.enter().append('g');

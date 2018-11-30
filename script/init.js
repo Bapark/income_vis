@@ -38,6 +38,9 @@ function createColorScales() {
 	colorScales.hispanic = d3.scaleLinear().domain([1,6])
 		//.interpolate(d3.interpolateHcl)
 		.range([d3.rgb("#550080"), d3.rgb('#d580ff')]);
+	colorScales.poverty = function() {
+		return '#e6e6e6';
+	}
 
 	colorScales.top5 = 1;
 	colorScales.highest = 2;
