@@ -141,8 +141,9 @@ class AggregateIncomeBarPlot {
             .attr('width', this.xScale.bandwidth())
             .attr('height', (d) => this.height - this.yScale(d.value))
             .attr('x', (d) => this.xScale(`${d.category.toUpperCase()} ${d.pentile.toUpperCase()}`))
-            .attr('y', (d) => this.yScale(d.value))
-            .append('title')
+            .attr('y', (d) => this.yScale(d.value));
+        bars.selectAll('title').remove();
+        bars.append('title')
             .text(d => `${d3.format("$,.2f")(d.value)}`);
         this.barGroup
             .attr('transform', `translate(${this.margin.left + 1}, ${this.margin.top})`);
