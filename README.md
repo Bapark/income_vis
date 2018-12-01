@@ -26,4 +26,3 @@ Files in this project derived from other sources
 /data/*
 
 The only external libraries used are D3 and bootstrapcss which are loaded from CDN and not hosted.
-  
