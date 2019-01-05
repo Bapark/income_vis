@@ -95,7 +95,7 @@ async function loadData(){
 		aggregateIncomeBarPlot.updatePlot();
 	});
 	d3.selectAll('.top-level-button').on('change', () => {
-		let src = d3.event.originalTarget;
+		let src = d3.event.currentTarget;
 		d3.selectAll(`.${src.classList[1]}`)
 			.nodes()
 			.forEach((elem) => {
